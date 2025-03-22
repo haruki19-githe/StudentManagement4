@@ -3,13 +3,10 @@ package raisetech.StudentManagement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import raisetech.StudentManagement.Repository.StudentRepository;
 
 
 @SpringBootApplication
-@RestController
 public class StudentManagementApplication {
 
     @Autowired
@@ -19,14 +16,5 @@ public class StudentManagementApplication {
         SpringApplication.run(StudentManagementApplication.class, args);
     }
 
-    @GetMapping("/studentList")
-    public List<Student> getStudent() {
-        return repository.StudentListSearch();
-    }
-
-    @GetMapping("/studentCourseList")
-    public List<StudentCourses> getStudentCourseList() {
-        return repository.StudentCourseListSearch();
-    }
 
 }

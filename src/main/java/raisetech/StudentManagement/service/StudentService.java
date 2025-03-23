@@ -6,8 +6,8 @@ import raisetech.StudentManagement.Repository.StudentRepository;
 import raisetech.StudentManagement.data.Student;
 import raisetech.StudentManagement.data.StudentCourses;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
@@ -19,22 +19,12 @@ public class StudentService {
     }
 
     public List<Student> searchStudentList() {
-        List<Student> only30sai = new ArrayList<>();
-        for (Student student : repository.StudentListSearch()) {
-            if (student.getAge() >= 30 && student.getAge() <= 39) {
-                only30sai.add(student);
-            }
-        }
+        List<Student> only30sai = repository.StudentListSearch().stream().filter(student -> student.getAge() >= 30 && student.getAge() <= 39).collect(Collectors.toList());
         return only30sai;
     }
 
-    public List<StudentCourses> searchStudentcourseList() {
-        List<StudentCourses> onlyJavaCourse = new ArrayList<>();
-        for (StudentCourses student2 : repository.StudentCourseListSearch()) {
-            if (student2.getCourseName().matches("javaコース")) {
-                onlyJavaCourse.add(student2);
-            }
-        }
+    public List<StudentCourses> searchStudentCourseList() {
+        List<StudentCourses> onlyJavaCourse = repository.StudentCourseListSearch().stream().filter(student2 -> student2.getCourseName().matches("javaコース")).collect(Collectors.toList());
         return onlyJavaCourse;
     }
 

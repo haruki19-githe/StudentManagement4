@@ -19,12 +19,14 @@ public class StudentService {
     }
 
     public List<Student> searchStudentList() {
-        List<Student> only30sai = repository.StudentListSearch().stream().filter(student -> student.getAge() >= 30 && student.getAge() <= 39).collect(Collectors.toList());
+        List<Student> only30sai = repository.StudentListSearch()
+                .stream().filter(student -> student.getAge() >= 30 && student.getAge() <= 39).collect(Collectors.toList());
         return only30sai;
     }
 
     public List<StudentCourses> searchStudentCourseList() {
-        List<StudentCourses> onlyJavaCourse = repository.StudentCourseListSearch().stream().filter(student2 -> student2.getCourseName().matches("javaコース")).collect(Collectors.toList());
+        List<StudentCourses> onlyJavaCourse = repository.StudentCourseListSearch()
+                .stream().filter(student2 -> student2.getCourseName().matches("javaコース")).collect(Collectors.toList());
         return onlyJavaCourse;
     }
 

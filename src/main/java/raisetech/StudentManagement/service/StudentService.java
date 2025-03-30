@@ -25,18 +25,7 @@ public class StudentService {
 
     //StudentServiceで登録処理
     public void registerStudent(StudentDetail studentDetail) {
-        Student students =new Student();
-        students.setId(studentDetail.getStudent().getId());
-        students.setName(studentDetail.getStudent().getName());
-        students.setFurigana(studentDetail.getStudent().getFurigana());
-        students.setNickName(studentDetail.getStudent().getNickName());
-        students.setEmail(studentDetail.getStudent().getEmail());
-        students.setArea(studentDetail.getStudent().getArea());
-        students.setAge(studentDetail.getStudent().getAge());
-        students.setGender(studentDetail.getStudent().getGender());
-        students.setRemark(studentDetail.getStudent().getRemark());
-
-        repository.insertStudent(students);
+        repository.insertStudent(studentDetail.getStudent());
     }
 
     public List<StudentCourses> searchStudentCourseList() {

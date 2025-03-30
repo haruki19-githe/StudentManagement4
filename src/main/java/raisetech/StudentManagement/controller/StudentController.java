@@ -1,4 +1,5 @@
 package raisetech.StudentManagement.controller;
+//Controller
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -55,9 +56,12 @@ public class StudentController {
         if (result.hasErrors()) {
             return "registerStudent";
         }
-
-                //新規受講生情報の登録処理を実装する
-                //コース情報も一緒に登録できるに実装する。コースは単体でいい。
-                return "redirect:/studentList";
-        }
+        //StudentServiceに名前やIDの情報を持ったstudentDetailを送る
+        service.registerStudent(studentDetail);
+        //新規受講生情報の登録処理を実装する
+        //コース情報も一緒に登録できるに実装する。コースは単体でいい。
+        return "redirect:/studentList";
     }
+
+
+}

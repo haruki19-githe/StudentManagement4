@@ -1,4 +1,5 @@
 package raisetech.StudentManagement.data;
+//Model
 
 import lombok.Getter;
 import lombok.Setter;

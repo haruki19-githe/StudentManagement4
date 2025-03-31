@@ -1,4 +1,5 @@
 package raisetech.StudentManagement.domain;
+//Model
 
 import lombok.Getter;
 import lombok.Setter;

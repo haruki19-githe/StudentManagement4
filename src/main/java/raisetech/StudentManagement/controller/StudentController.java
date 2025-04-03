@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import raisetech.StudentManagement.converter.StudentConverter;
 import raisetech.StudentManagement.data.Student;
@@ -54,14 +55,6 @@ public class StudentController {
         return "registerStudent";
     }
 
-    //更新処理
-    @GetMapping("/updateStudent")
-    public String updateStudent(Model model, StudentDetail studentDetail) {
-        StudentDetail studentDetail1 =
-                studentDetail.setStudent(Arrays.asList());
-        model.addAttribute("studentDetail", studentDetail);
-        return "updateStudent2";
-    }
 
     @PostMapping("/registerStudent")
     public String registerStudent(@ModelAttribute StudentDetail studentDetail, BindingResult result) {
@@ -75,13 +68,23 @@ public class StudentController {
         return "redirect:/studentList";
     }
 
-    @PostMapping("/updateStudent2")
+    //更新処理
+    @GetMapping("/student/{id}")
+    public String getStudent (@PathVariable String id, Model model) {
+        StudentDetail studentDetail = service.searchStudent(id);
+        model.addAttribute("studentDetail", studentDetail);
+        return "updateStudent";
+    }
+
+
+    @PostMapping("/updateStudent")
     public String updateStudent(@ModelAttribute StudentDetail studentDetail, BindingResult result) {
         if (result.hasErrors()) {
-            return "updateStudent2";
+            return "updateStudent";
         }
         service.updateStudent(studentDetail);
         return "redirect:/studentList";
     }
+
 
 }

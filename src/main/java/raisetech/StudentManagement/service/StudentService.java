@@ -11,7 +11,6 @@ import raisetech.StudentManagement.domain.StudentDetail;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class StudentService {
@@ -22,9 +21,19 @@ public class StudentService {
         this.repository = repository;
     }
 
+    public StudentDetail searchStudent(String id) {
+        Student student = repository.searchStudent(id);
+        List<StudentCourses> studentsCourses = repository.searchStudentCourse(student.getId());
+        StudentDetail studentDetail = new StudentDetail();
+        studentDetail.setStudent(student);
+        studentDetail.setStudentCourses(studentsCourses);
+        return studentDetail;
+    }
+
     public List<Student> searchStudentList() {
         return repository.studentListSearch();
     }
+
 
     public List<StudentCourses> searchStudentCourseList() {
         return repository.studentCourseListSearch();
@@ -34,7 +43,7 @@ public class StudentService {
     @Transactional
     public void registerStudent(StudentDetail studentDetail) {
         repository.registerStudent(studentDetail.getStudent());
-        //TODO:コース情報登録も行う
+        //コース情報登録
         for (StudentCourses studentCourse : studentDetail.getStudentCourses()) {
             studentCourse.setStudentId(studentDetail.getStudent().getId());
             studentCourse.setCourseStartDate(LocalDateTime.now());
@@ -47,6 +56,10 @@ public class StudentService {
     @Transactional
     public void updateStudent(StudentDetail studentDetail) {
         repository.updateStudent(studentDetail.getStudent());
+        //コース情報登録
+        for (StudentCourses studentCourse : studentDetail.getStudentCourses()) {
+            repository.updateStudentCourse(studentCourse);
+        }
     }
 
 

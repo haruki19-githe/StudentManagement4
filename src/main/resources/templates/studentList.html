@@ -23,6 +23,7 @@
     <tr th:each="studentDetail:${studentList}">
         <td th:text="${studentDetail.student.id}">1</td>
         <td th:text="${studentDetail.student.name}">山田太朗</td>
+        <a th:href="@{http://localhost:8080/updateStudent{id}(id=${student.id})}">名前</a>
         <td th:text="${studentDetail.student.furigana}">ヤマダタロウ</td>
         <td th:text="${studentDetail.student.nickName}">タロー</td>
         <td th:text="${studentDetail.student.email}">taro@example.com</td>

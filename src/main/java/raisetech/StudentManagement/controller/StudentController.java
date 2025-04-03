@@ -15,6 +15,7 @@ import raisetech.StudentManagement.service.StudentService;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -39,16 +40,27 @@ public class StudentController {
 
     }
 
-
     @GetMapping("/studentCourseList")
     public List<StudentCourses> getStudentCourseList() {
         return service.searchStudentCourseList();
     }
 
+    //登録処理
     @GetMapping("/newStudent")
     public String newStudent(Model model) {
-        model.addAttribute("studentDetail", new StudentDetail());
+        StudentDetail studentDetail = new StudentDetail();
+        studentDetail.setStudentCourses(Arrays.asList(new StudentCourses()));
+        model.addAttribute("studentDetail", studentDetail);
         return "registerStudent";
+    }
+
+    //更新処理
+    @GetMapping("/updateStudent")
+    public String updateStudent(Model model, StudentDetail studentDetail) {
+        StudentDetail studentDetail1 =
+                studentDetail.setStudent(Arrays.asList());
+        model.addAttribute("studentDetail", studentDetail);
+        return "updateStudent2";
     }
 
     @PostMapping("/registerStudent")
@@ -63,5 +75,13 @@ public class StudentController {
         return "redirect:/studentList";
     }
 
+    @PostMapping("/updateStudent2")
+    public String updateStudent(@ModelAttribute StudentDetail studentDetail, BindingResult result) {
+        if (result.hasErrors()) {
+            return "updateStudent2";
+        }
+        service.updateStudent(studentDetail);
+        return "redirect:/studentList";
+    }
 
 }

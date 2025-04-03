@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import raisetech.StudentManagement.converter.StudentConverter;
 import raisetech.StudentManagement.data.Student;
@@ -15,6 +16,7 @@ import raisetech.StudentManagement.service.StudentService;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -39,17 +41,20 @@ public class StudentController {
 
     }
 
-
     @GetMapping("/studentCourseList")
     public List<StudentCourses> getStudentCourseList() {
         return service.searchStudentCourseList();
     }
 
+    //登録処理
     @GetMapping("/newStudent")
     public String newStudent(Model model) {
-        model.addAttribute("studentDetail", new StudentDetail());
+        StudentDetail studentDetail = new StudentDetail();
+        studentDetail.setStudentCourses(Arrays.asList(new StudentCourses()));
+        model.addAttribute("studentDetail", studentDetail);
         return "registerStudent";
     }
+
 
     @PostMapping("/registerStudent")
     public String registerStudent(@ModelAttribute StudentDetail studentDetail, BindingResult result) {
@@ -60,6 +65,24 @@ public class StudentController {
         service.registerStudent(studentDetail);
         //新規受講生情報の登録処理を実装する
         //コース情報も一緒に登録できるに実装する。コースは単体でいい。
+        return "redirect:/studentList";
+    }
+
+    //更新処理
+    @GetMapping("/student/{id}")
+    public String getStudent (@PathVariable String id, Model model) {
+        StudentDetail studentDetail = service.searchStudent(id);
+        model.addAttribute("studentDetail", studentDetail);
+        return "updateStudent";
+    }
+
+
+    @PostMapping("/updateStudent")
+    public String updateStudent(@ModelAttribute StudentDetail studentDetail, BindingResult result) {
+        if (result.hasErrors()) {
+            return "updateStudent";
+        }
+        service.updateStudent(studentDetail);
         return "redirect:/studentList";
     }
 

@@ -22,7 +22,9 @@ public class StudentService {
     }
 
     public StudentDetail searchStudent(String id) {
+        //受講生情報(id一個)
         Student student = repository.searchStudent(id);
+        //コース情報(受講生情報に紐づくid)
         List<StudentCourses> studentsCourses = repository.searchStudentCourse(student.getId());
         StudentDetail studentDetail = new StudentDetail();
         studentDetail.setStudent(student);
@@ -31,12 +33,12 @@ public class StudentService {
     }
 
     public List<Student> searchStudentList() {
-        return repository.studentListSearch();
+        return repository.searchStudentList();
     }
 
 
     public List<StudentCourses> searchStudentCourseList() {
-        return repository.studentCourseListSearch();
+        return repository.searchStudentCourseList();
     }
 
     //StudentServiceで登録処理
@@ -62,5 +64,14 @@ public class StudentService {
         }
     }
 
+    //削除処理
+    @Transactional
+    public void deleteStudent(StudentDetail studentDetail) {
+        repository.deleteStudent(studentDetail.getStudent());
+        //コース情報登録
+        for (StudentCourses studentCourse : studentDetail.getStudentCourses()) {
+            repository.deleteStudentCourse(studentCourse);
+        }
+    }
 
 }

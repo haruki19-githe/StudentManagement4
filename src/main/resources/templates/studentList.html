@@ -26,7 +26,10 @@
             <a href="/studentList" th:href="@{student/{id}(id=${studentDetail.student.id})}"
                th:text="${studentDetail.student.name}">山田太朗</a>
         </td>
-        <td th:text="${studentDetail.student.furigana}">ヤマダタロウ</td>
+        <td>
+           <a href="/studentList" th:href="@{students/{id}(id=${studentDetail.student.id})}"
+              th:text="${studentDetail.student.furigana}">ヤマダタロウ</a>
+        </td>
         <td th:text="${studentDetail.student.nickName}">タロー</td>
         <td th:text="${studentDetail.student.email}">taro@example.com</td>
         <td th:text="${studentDetail.student.area}">東京</td>

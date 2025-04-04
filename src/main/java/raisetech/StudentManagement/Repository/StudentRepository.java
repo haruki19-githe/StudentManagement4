@@ -9,19 +9,19 @@ import java.util.List;
 
 @Mapper
 public interface StudentRepository {
-    @Select("SELECT * FROM students")
-    List<Student> studentListSearch();
+    @Select("SELECT * FROM students WHERE is_deleted = false ")
+    List<Student> searchStudentList();
 
     @Select("SELECT * FROM students WHERE id = #{id}")
     Student searchStudent(String id);
 
     @Select("SELECT * FROM students_courses")
-    List<StudentCourses> studentCourseListSearch();
+    List<StudentCourses> searchStudentCourseList();
 
     @Select("SELECT * FROM students_courses WHERE student_id = #{student_id}")
     List<StudentCourses> searchStudentCourse(String studentId);
 
-    //Repositoryでデータの保存
+    //Repositoryでデータの保存、受講生情報更新処理
     @Insert("INSERT INTO students(name,furigana,nickName,email,area,age,gender,remark,is_deleted)" +
             " VALUES (#{name},#{furigana},#{nickName},#{email},#{area},#{age},#{gender},#{remark},false)")
     @Options(useGeneratedKeys = true, keyProperty = "id")
@@ -42,4 +42,11 @@ public interface StudentRepository {
     @Update("UPDATE  students_courses SET course_name = #{courseName}  WHERE id = #{id} ")
     void updateStudentCourse(StudentCourses studentCourses);
 
+    //受講生情報削除処理
+    @Delete("DELETE FROM students WHERE id = #{id}")
+    void deleteStudent(Student student);
+
+
+    @Delete("DELETE FROM students_courses WHERE id = #{id} ")
+    void deleteStudentCourse(StudentCourses studentCourses);
 }

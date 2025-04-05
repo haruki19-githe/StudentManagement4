@@ -86,5 +86,26 @@ public class StudentController {
         return "redirect:/studentList";
     }
 
+    //削除処理
+    @GetMapping("/students/{id}")
+    public String getStudents (@PathVariable String id, Model model) {
+        StudentDetail studentDetail = service.searchStudent(id);
+        model.addAttribute("studentDetail", studentDetail);
+        return "deleteStudent";
+    }
 
-}
+
+    @PostMapping("/deleteStudent")
+    public String deleteStudent(@ModelAttribute StudentDetail studentDetail, BindingResult result) {
+        if (result.hasErrors()) {
+            return "deleteStudent";
+        }
+        service.deleteStudent(studentDetail);
+        return "redirect:/studentList";
+    }
+
+    }
+
+
+
+

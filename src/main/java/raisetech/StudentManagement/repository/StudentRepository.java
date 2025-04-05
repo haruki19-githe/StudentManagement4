@@ -1,4 +1,4 @@
-package raisetech.StudentManagement.Repository;
+package raisetech.StudentManagement.repository;
 //Model
 
 import org.apache.ibatis.annotations.*;
@@ -48,5 +48,5 @@ public interface StudentRepository {
 
 
     @Delete("DELETE FROM students_courses WHERE id = #{id} ")
-    void deleteStudentCourse(StudentCourses studentCourses);
+    void deleteStudentCourse(StudentCourses studentCourse);
 }

@@ -12,7 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import raisetech.StudentManagement.domain.StudentDetail;
-import raisetech.StudentManagement.exception.TestException;
+import raisetech.StudentManagement.exception.ResourceNotFoundException;
 import raisetech.StudentManagement.service.StudentService;
 
 
@@ -38,9 +38,13 @@ public class StudentController {
      * @return　受講生詳細一覧（全件）
      */
     @GetMapping("/studentList")
-    public List<StudentDetail> getStudentList() throws TestException {
-        throw new TestException("現在このAPIは利用できません。URLは「studentList」ではなく「students」を利用してください。");
+    public List<StudentDetail> getStudentList() {
+        return service.searchStudentList();
+    }
 
+    @GetMapping("studentListError")
+    public List<StudentDetail> getStudentList2() throws Exception {
+        throw new Exception("現在このAPIは利用できません。URLは「studentList」ではなく「students」を利用してください。");
     }
 
 
@@ -104,12 +108,13 @@ public class StudentController {
     }
 
     //例外が発生したらここに飛んでくる
-    @ExceptionHandler(TestException.class)
+    @ExceptionHandler(Exception.class)
     //キャッチして、例外内容が入って（exに）ハンドリングされた後に
-    public ResponseEntity<String> handleTestException(TestException ex) {
+    public ResponseEntity<String> handleException(ResourceNotFoundException ex) {
         //BAD_REQUEST（400）を設定してメッセージの内容をbodyに含める
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
+
 }
 
 

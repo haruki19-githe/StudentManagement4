@@ -107,13 +107,6 @@ public class StudentController {
         return "redirect:/studentList";
     }
 
-    //例外が発生したらここに飛んでくる
-    @ExceptionHandler(Exception.class)
-    //キャッチして、例外内容が入って（exに）ハンドリングされた後に
-    public ResponseEntity<String> handleException(ResourceNotFoundException ex) {
-        //BAD_REQUEST（400）を設定してメッセージの内容をbodyに含める
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
-    }
 
 }
 

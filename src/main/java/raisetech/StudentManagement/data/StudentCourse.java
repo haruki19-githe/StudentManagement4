@@ -1,6 +1,7 @@
 package raisetech.StudentManagement.data;
 //Model
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 

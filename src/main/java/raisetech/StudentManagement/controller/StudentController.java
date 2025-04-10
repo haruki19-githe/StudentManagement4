@@ -2,14 +2,17 @@ package raisetech.StudentManagement.controller;
 //Controller
 
 
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import raisetech.StudentManagement.domain.StudentDetail;
+import raisetech.StudentManagement.exception.TestException;
 import raisetech.StudentManagement.service.StudentService;
 
 
@@ -35,8 +38,8 @@ public class StudentController {
      * @return　受講生詳細一覧（全件）
      */
     @GetMapping("/studentList")
-    public List<StudentDetail> getStudentList() {
-        return service.searchStudentList();
+    public List<StudentDetail> getStudentList() throws TestException {
+        throw new TestException("現在このAPIは利用できません。URLは「studentList」ではなく「students」を利用してください。");
 
     }
 
@@ -66,7 +69,7 @@ public class StudentController {
      */
     @GetMapping("/student/{id}")
     public StudentDetail getStudent
-    (@PathVariable @Size(min = 1, max = 3, message = "idは1〜3桁を入力してください。") String id) {
+    (@PathVariable @NotBlank @Pattern(regexp = "^\\d+$") String id) {
         return service.searchStudent(id);
     }
 
@@ -100,6 +103,13 @@ public class StudentController {
         return "redirect:/studentList";
     }
 
+    //例外が発生したらここに飛んでくる
+    @ExceptionHandler(TestException.class)
+    //キャッチして、例外内容が入って（exに）ハンドリングされた後に
+    public ResponseEntity<String> handleTestException(TestException ex) {
+        //BAD_REQUEST（400）を設定してメッセージの内容をbodyに含める
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
 }
 
 

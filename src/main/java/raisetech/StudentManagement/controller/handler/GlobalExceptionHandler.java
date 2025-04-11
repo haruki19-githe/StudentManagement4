@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import raisetech.StudentManagement.exception.ResourceNotFoundException;
 
 @RestControllerAdvice
-public class Exception {
+public class GlobalExceptionHandler {
     //例外が発生したらここに飛んでくる
     @ExceptionHandler(ResourceNotFoundException.class)
     //キャッチして、例外内容が入って（exに）ハンドリングされた後に

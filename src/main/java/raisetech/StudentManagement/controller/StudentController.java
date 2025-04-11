@@ -5,7 +5,6 @@ package raisetech.StudentManagement.controller;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -44,7 +43,7 @@ public class StudentController {
 
     @GetMapping("studentListError")
     public List<StudentDetail> getStudentList2() throws Exception {
-        throw new Exception("現在このAPIは利用できません。URLは「studentList」ではなく「students」を利用してください。");
+        throw new ResourceNotFoundException("現在このAPIは利用できません。URLは「studentList」ではなく「students」を利用してください。");
     }
 
 

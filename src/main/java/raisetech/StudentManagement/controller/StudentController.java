@@ -41,9 +41,9 @@ public class StudentController {
         return service.searchStudentList();
     }
 
-    @GetMapping("studentListError")
+    @GetMapping("studentListNotUseUrl")
     public List<StudentDetail> getStudentList2() throws Exception {
-        throw new ResourceNotFoundException("現在このAPIは利用できません。URLは「studentList」ではなく「students」を利用してください。");
+        throw new ResourceNotFoundException("無効のURLです。");
     }
 
 

@@ -45,19 +45,19 @@
     </insert>
 
     <!--　受講生コースを更新 -->
-    <insert id="updateStudent">
+    <update id="updateStudent">
         UPDATE students
         SET name = #{name}, furigana = #{furigana}, nickname = #{nickName}, email = #{email},
         area = #{area}, age = #{age}, gender = #{gender}, remark = #{remark},
         is_deleted = #{isDeleted} WHERE id = #{id}
-    </insert>
+    </update>
 
     <!--　受講生コース情報のコース名を更新 -->
-    <insert id="updateStudentCourse">
-        UPDATE  students_courses
+    <update id="updateStudentCourse">
+        UPDATE students_courses
         SET course_name = #{courseName}
         WHERE id = #{id}
-    </insert>
+    </update>
 
 
 </mapper>

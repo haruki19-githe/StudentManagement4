@@ -88,23 +88,24 @@ public class StudentController {
         return ResponseEntity.ok("更新処理が成功しました。");
     }
 
-    //削除処理
-    @GetMapping("/students/{id}")
-    public String getStudents(@PathVariable String id, Model model) {
-        StudentDetail studentDetail = service.searchStudent(id);
-        model.addAttribute("studentDetail", studentDetail);
+
+//削除処理
+@GetMapping("/students/{id}")
+public String getStudents(@PathVariable String id, Model model) {
+    StudentDetail studentDetail = service.searchStudent(id);
+    model.addAttribute("studentDetail", studentDetail);
+    return "deleteStudent";
+}
+
+
+@PostMapping("/deleteStudent")
+public String deleteStudent(@ModelAttribute StudentDetail studentDetail, BindingResult result) {
+    if (result.hasErrors()) {
         return "deleteStudent";
     }
-
-
-    @PostMapping("/deleteStudent")
-    public String deleteStudent(@ModelAttribute StudentDetail studentDetail, BindingResult result) {
-        if (result.hasErrors()) {
-            return "deleteStudent";
-        }
-        service.deleteStudent(studentDetail);
-        return "redirect:/studentList";
-    }
+    service.deleteStudent(studentDetail);
+    return "redirect:/studentList";
+}
 
 
 }

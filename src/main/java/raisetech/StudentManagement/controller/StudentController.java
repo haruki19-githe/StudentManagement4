@@ -2,7 +2,8 @@ package raisetech.StudentManagement.controller;
 //Controller
 
 
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -10,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import raisetech.StudentManagement.domain.StudentDetail;
+import raisetech.StudentManagement.exception.ResourceNotFoundException;
 import raisetech.StudentManagement.service.StudentService;
 
 
@@ -37,7 +39,11 @@ public class StudentController {
     @GetMapping("/studentList")
     public List<StudentDetail> getStudentList() {
         return service.searchStudentList();
+    }
 
+    @GetMapping("studentListNotUseUrl")
+    public List<StudentDetail> getStudentList2() throws Exception {
+        throw new ResourceNotFoundException("無効のURLです。");
     }
 
 
@@ -66,7 +72,7 @@ public class StudentController {
      */
     @GetMapping("/student/{id}")
     public StudentDetail getStudent
-    (@PathVariable @Size(min = 1, max = 3, message = "idは1〜3桁を入力してください。") String id) {
+    (@PathVariable @NotBlank @Pattern(regexp = "^\\d+$") String id) {
         return service.searchStudent(id);
     }
 
@@ -81,6 +87,7 @@ public class StudentController {
         service.updateStudent(studentDetail);
         return ResponseEntity.ok("更新処理が成功しました。");
     }
+
 
     //削除処理
     @GetMapping("/students/{id}")
@@ -99,6 +106,7 @@ public class StudentController {
         service.deleteStudent(studentDetail);
         return "redirect:/studentList";
     }
+
 
 }
 

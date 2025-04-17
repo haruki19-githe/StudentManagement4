@@ -63,14 +63,14 @@ public interface StudentRepository {
     /**
      * 受講生を更新します。
      *
-     * @param student　受講生
+     * @param student 　受講生
      */
     void updateStudent(Student student);
 
     /**
      * 受講生コース情報のコース名を更新します。
      *
-     * @param studentCourse　受講生コース情報
+     * @param studentCourse 　受講生コース情報
      */
     void updateStudentCourse(StudentCourse studentCourse);
 
@@ -81,4 +81,5 @@ public interface StudentRepository {
 
     @Delete("DELETE FROM students_courses WHERE id = #{id} ")
     void deleteStudentCourse(StudentCourse studentCourse);
+
 }

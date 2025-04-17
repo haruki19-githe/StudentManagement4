@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import raisetech.StudentManagement.converter.StudentConverter;
+import raisetech.StudentManagement.exception.ResourceNotFoundException;
 import raisetech.StudentManagement.repository.StudentRepository;
 import raisetech.StudentManagement.data.Student;
 import raisetech.StudentManagement.data.StudentCourse;
@@ -37,6 +38,9 @@ public class StudentService {
     public StudentDetail searchStudent(String id) {
         //受講生情報(id一個)
         Student student = repository.searchStudent(id);
+        if (student == null) {
+            throw new ResourceNotFoundException("指定されたIDの受講生は存在しません。");
+        }
         //コース情報(受講生情報に紐づくid)
         List<StudentCourse> studentCourse = repository.searchStudentCourse(student.getId());
         return new StudentDetail(student, studentCourse);

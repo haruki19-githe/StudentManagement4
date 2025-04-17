@@ -89,23 +89,23 @@ public class StudentController {
     }
 
 
-//削除処理
-@GetMapping("/students/{id}")
-public String getStudents(@PathVariable String id, Model model) {
-    StudentDetail studentDetail = service.searchStudent(id);
-    model.addAttribute("studentDetail", studentDetail);
-    return "deleteStudent";
-}
-
-
-@PostMapping("/deleteStudent")
-public String deleteStudent(@ModelAttribute StudentDetail studentDetail, BindingResult result) {
-    if (result.hasErrors()) {
+    //削除処理
+    @GetMapping("/students/{id}")
+    public String getStudents(@PathVariable String id, Model model) {
+        StudentDetail studentDetail = service.searchStudent(id);
+        model.addAttribute("studentDetail", studentDetail);
         return "deleteStudent";
     }
-    service.deleteStudent(studentDetail);
-    return "redirect:/studentList";
-}
+
+
+    @PostMapping("/deleteStudent")
+    public String deleteStudent(@ModelAttribute StudentDetail studentDetail, BindingResult result) {
+        if (result.hasErrors()) {
+            return "deleteStudent";
+        }
+        service.deleteStudent(studentDetail);
+        return "redirect:/studentList";
+    }
 
 
 }

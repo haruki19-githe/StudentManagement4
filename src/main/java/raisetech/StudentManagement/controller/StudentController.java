@@ -92,7 +92,10 @@ public class StudentController {
             {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "成功例"
+                            description = "成功例",
+                            content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = StudentDetail.class))
                     ),
 
                     @ApiResponse(

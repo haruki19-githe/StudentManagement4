@@ -2,6 +2,11 @@ package raisetech.StudentManagement.controller;
 //Controller
 
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 import raisetech.StudentManagement.domain.StudentDetail;
 import raisetech.StudentManagement.exception.ResourceNotFoundException;
@@ -36,11 +42,24 @@ public class StudentController {
      *
      * @return　受講生詳細一覧（全件）
      */
+    @Operation(summary = "一覧検索", description = "受講生の一覧を検索します")
+    @ApiResponses(
+            {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "成功例",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = StudentDetail.class))
+                    )}
+
+    )
     @GetMapping("/studentList")
     public List<StudentDetail> getStudentList() {
         return service.searchStudentList();
     }
 
+    @Operation(summary = "例外処理のテスト用です")
     @GetMapping("studentListNotUseUrl")
     public List<StudentDetail> getStudentList2() throws Exception {
         throw new ResourceNotFoundException("無効のURLです。");
@@ -55,6 +74,7 @@ public class StudentController {
      * @param studentDetail 　受講生詳細
      * @return　実行結果
      */
+    @Operation(summary = "受講生登録", description = "受講生を登録します。")
     @PostMapping("/registerStudent")
     public ResponseEntity<StudentDetail> registerStudent(@RequestBody StudentDetail studentDetail) {
         //StudentServiceに名前やIDの情報を持ったstudentDetailを送る
@@ -70,6 +90,22 @@ public class StudentController {
      * @param id 　受講生ID
      * @return　受講生
      */
+    @Operation(summary = "受講生詳細の検索", description = "IDに紐づく任意の受講生の情報を取得します。")
+    @ApiResponses(
+            {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "成功例",
+                            content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = StudentDetail.class))
+                    ),
+
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Internal server error",
+                            content = @Content(schema = @Schema(implementation = ErrorResponse.class)))}
+    )
     @GetMapping("/student/{id}")
     public StudentDetail getStudent
     (@PathVariable @NotBlank @Pattern(regexp = "^\\d+$") String id) {
@@ -82,6 +118,7 @@ public class StudentController {
      * @param studentDetail 　受講生詳細
      * @return　実行結果
      */
+    @Operation(summary = "受講生詳細の更新", description = "キャンセルフラグの更新もここで行います。")
     @PutMapping("/updateStudent")
     public ResponseEntity<String> updateStudent(@RequestBody StudentDetail studentDetail) {
         service.updateStudent(studentDetail);
@@ -90,6 +127,7 @@ public class StudentController {
 
 
     //削除処理
+    @Operation(summary = "削除処理用の受講生検索処理です")
     @GetMapping("/students/{id}")
     public String getStudents(@PathVariable String id, Model model) {
         StudentDetail studentDetail = service.searchStudent(id);
@@ -97,8 +135,8 @@ public class StudentController {
         return "deleteStudent";
     }
 
-
-    @PostMapping("/deleteStudent")
+    @Operation(summary = "削除処理用の受講生検索処理です。")
+    @DeleteMapping("/deleteStudent")
     public String deleteStudent(@ModelAttribute StudentDetail studentDetail, BindingResult result) {
         if (result.hasErrors()) {
             return "deleteStudent";

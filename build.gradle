@@ -32,11 +32,17 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     //Validation
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    //OpenAPI Generator
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.6'
+
     //便利機能、Utility
     implementation 'org.apache.commons:commons-lang3:3.14.0'
+
     //lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
     //MySQLドライバ
     runtimeOnly 'com.mysql:mysql-connector-j'
     //MyBaits

@@ -66,21 +66,22 @@ class StudentServiceTest {
 
     @Test
     void 受講生詳細の検索＿リポジトリの処理が適切に呼び出せていること() {
-        String id="1";
+        StudentDetail studentDetail1 = new StudentDetail();
+        String id = "1";
         Student student = new Student();
         List<StudentCourse> studentCourse = new ArrayList<>();
         when(repository.searchStudent(id)).thenReturn(student);
         when(repository.searchStudentCourse(id)).thenReturn(studentCourse);
 
         //実行
-        sut.searchStudentList();
+        sut.searchStudent(id);
 
         //検証
         verify(repository, Mockito.times(1))
                 .searchStudent(id);
         verify(repository, Mockito.times(1))
                 .searchStudentCourse(id);
-        verify(studentDetail, Mockito.times(1))
+        verify(studentService, Mockito.times(1))
                 .
 
 

@@ -14,6 +14,8 @@ import raisetech.StudentManagement.data.StudentCourse;
 import raisetech.StudentManagement.domain.StudentDetail;
 import raisetech.StudentManagement.repository.StudentRepository;
 
+import static org.assertj.core.api.Assertions.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,8 +83,7 @@ class StudentServiceTest {
                 .searchStudent(id);
         verify(repository, Mockito.times(1))
                 .searchStudentCourse(id);
-        verify(studentService, Mockito.times(1))
-                .
+        assertThat(sut).isEqualTo(new StudentDetail(student, studentCourse));
 
 
     }

@@ -68,7 +68,6 @@ class StudentServiceTest {
 
     @Test
     void 受講生詳細の検索＿リポジトリの処理が適切に呼び出せていること() {
-        StudentDetail studentDetail1 = new StudentDetail();
         String id = "1";
         Student student = new Student();
         List<StudentCourse> studentCourse = new ArrayList<>();
@@ -76,15 +75,27 @@ class StudentServiceTest {
         when(repository.searchStudentCourse(id)).thenReturn(studentCourse);
 
         //実行
-        sut.searchStudent(id);
+        StudentDetail actual = sut.searchStudent(id);
 
         //検証
         verify(repository, Mockito.times(1))
                 .searchStudent(id);
         verify(repository, Mockito.times(1))
                 .searchStudentCourse(id);
-        assertThat(sut).isEqualTo(new StudentDetail(student, studentCourse));
+        assertThat(actual).isEqualTo(new StudentDetail(student, studentCourse));
 
 
     }
+
+    @Test
+    void 受講生の登録＿リポジトリが呼び出せいていること() {
+        Student student = new Student();
+        when(studentDetail.getStudent()).thenReturn(student);
+        repository.registerStudent(student);
+        for ()
+
+
+    }
+
+
 }

@@ -71,9 +71,21 @@ class StudentServiceTest {
         String id = "1";
         Student student = new Student();
         List<StudentCourse> studentCourse = new ArrayList<>();
-        Student student1 = new Student("1", "佐藤太朗", "サトウタロウ", "タロ", "taro@example.com", "東京", 25, "男性", "白米が好き");
-        List<StudentCourse> studentCourse1 = new ArrayList<>("1", "1", "javaコース", "2024-12-01T00:00:00", "2024-12-31T00:00:00")
-        StudentDetail studentDetail1 = new StudentDetail(student1, studentCourse1);
+
+        Student studentTest = new Student();
+        studentTest.setId("1");
+        studentTest.setName("佐藤太朗");
+        studentTest.setFurigana("サトウタロウ");
+        studentTest.setNickName("タロ");
+        studentTest.setEmail("taro@example.com");
+        studentTest.setArea("東京");
+        studentTest.setAge(25);
+        studentTest.setGender("男性");
+        studentTest.setRemark("白米が好き");
+
+        List<StudentCourse> studentCourseTest = new ArrayList<>();
+
+        StudentDetail studentDetailTest = new StudentDetail(studentTest, studentCourseTest);
         when(repository.searchStudent(id)).thenReturn(student);
         when(repository.searchStudentCourse(id)).thenReturn(studentCourse);
 
@@ -85,21 +97,7 @@ class StudentServiceTest {
                 .searchStudent(id);
         verify(repository, Mockito.times(1))
                 .searchStudentCourse(id);
-        assertThat(studentDetail1).isEqualTo(new StudentDetail(student, studentCourse));
-
-    }
-
-    @Test
-    void 受講生の登録＿リポジトリが呼び出せいていること＿() {
-        Student student = new Student();
-        when(studentDetail.getStudent()).thenReturn(student);
-        repository.registerStudent(student);
-        for (StudentCourse studentCourse : studentDetail.getStudentCourseList()) {
-            repository.registerStudentCourse(studentCourse);
-        }
-
-        sut.registerStudent();
-
+        assertThat(studentDetailTest).isEqualTo(new StudentDetail(student, studentCourse));
 
     }
 

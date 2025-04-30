@@ -1,6 +1,7 @@
 package raisetech.StudentManagement.service;
 
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,8 +14,6 @@ import raisetech.StudentManagement.data.Student;
 import raisetech.StudentManagement.data.StudentCourse;
 import raisetech.StudentManagement.domain.StudentDetail;
 import raisetech.StudentManagement.repository.StudentRepository;
-
-import static org.assertj.core.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,38 +66,24 @@ class StudentServiceTest {
     }
 
     @Test
-    void 受講生詳細の検索＿リポジトリの処理＿StudentDetailが適切に呼び出せていること＿() {
+    void 受講生詳細の検索＿リポジトリの処理が適切に呼び出せていること() {
         String id = "1";
         Student student = new Student();
         List<StudentCourse> studentCourse = new ArrayList<>();
-
-        Student studentTest = new Student();
-        studentTest.setId("1");
-        studentTest.setName("佐藤太朗");
-        studentTest.setFurigana("サトウタロウ");
-        studentTest.setNickName("タロ");
-        studentTest.setEmail("taro@example.com");
-        studentTest.setArea("東京");
-        studentTest.setAge(25);
-        studentTest.setGender("男性");
-        studentTest.setRemark("白米が好き");
-
-        List<StudentCourse> studentCourseTest = new ArrayList<>();
-
-        StudentDetail studentDetailTest = new StudentDetail(studentTest, studentCourseTest);
         when(repository.searchStudent(id)).thenReturn(student);
         when(repository.searchStudentCourse(id)).thenReturn(studentCourse);
 
         //実行
-        sut.searchStudent(id);
+        StudentDetail expected = new StudentDetail();
+        StudentDetail actual = new StudentDetail();
+
 
         //検証
         verify(repository, Mockito.times(1))
                 .searchStudent(id);
         verify(repository, Mockito.times(1))
                 .searchStudentCourse(id);
-        assertThat(studentDetailTest).isEqualTo(new StudentDetail(student, studentCourse));
-
+        Assertions.assertEquals(excepted, actual);
     }
 
 

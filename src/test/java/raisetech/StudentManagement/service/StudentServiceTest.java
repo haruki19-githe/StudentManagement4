@@ -67,32 +67,38 @@ class StudentServiceTest {
     }
 
     @Test
-    void 受講生詳細の検索＿リポジトリの処理が適切に呼び出せていること() {
+    void 受講生詳細の検索＿リポジトリの処理＿StudentDetailが適切に呼び出せていること＿() {
         String id = "1";
         Student student = new Student();
         List<StudentCourse> studentCourse = new ArrayList<>();
+        Student student1 = new Student("1", "佐藤太朗", "サトウタロウ", "タロ", "taro@example.com", "東京", 25, "男性", "白米が好き");
+        List<StudentCourse> studentCourse1 = new ArrayList<>("1", "1", "javaコース", "2024-12-01T00:00:00", "2024-12-31T00:00:00")
+        StudentDetail studentDetail1 = new StudentDetail(student1, studentCourse1);
         when(repository.searchStudent(id)).thenReturn(student);
         when(repository.searchStudentCourse(id)).thenReturn(studentCourse);
 
         //実行
-        StudentDetail actual = sut.searchStudent(id);
+        sut.searchStudent(id);
 
         //検証
         verify(repository, Mockito.times(1))
                 .searchStudent(id);
         verify(repository, Mockito.times(1))
                 .searchStudentCourse(id);
-        assertThat(actual).isEqualTo(new StudentDetail(student, studentCourse));
-
+        assertThat(studentDetail1).isEqualTo(new StudentDetail(student, studentCourse));
 
     }
 
     @Test
-    void 受講生の登録＿リポジトリが呼び出せいていること() {
+    void 受講生の登録＿リポジトリが呼び出せいていること＿() {
         Student student = new Student();
         when(studentDetail.getStudent()).thenReturn(student);
         repository.registerStudent(student);
-        for ()
+        for (StudentCourse studentCourse : studentDetail.getStudentCourseList()) {
+            repository.registerStudentCourse(studentCourse);
+        }
+
+        sut.registerStudent();
 
 
     }

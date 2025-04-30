@@ -73,10 +73,10 @@ public class StudentService {
 
         repository.registerStudent(student);
         //コース情報登録
-        studentDetail.getStudentCourseList().forEach(studentCourse -> {
+        for (StudentCourse studentCourse : studentDetail.getStudentCourseList()) {
             initStudentsCourse(studentCourse, student);
             repository.registerStudentCourse(studentCourse);
-        });
+        }
         return studentDetail;
     }
 

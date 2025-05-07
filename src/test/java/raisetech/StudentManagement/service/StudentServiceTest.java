@@ -74,8 +74,8 @@ class StudentServiceTest {
         when(repository.searchStudentCourse(id)).thenReturn(studentCourse);
 
         //実行
-        StudentDetail expected = new StudentDetail();
-        StudentDetail actual = new StudentDetail();
+        StudentDetail expected = new StudentDetail(student,studentCourse);
+        StudentDetail actual = sut.searchStudent(id);
 
 
         //検証
@@ -83,7 +83,7 @@ class StudentServiceTest {
                 .searchStudent(id);
         verify(repository, Mockito.times(1))
                 .searchStudentCourse(id);
-        Assertions.assertEquals(excepted, actual);
+        Assertions.assertEquals(expected, actual);
     }
 
 

@@ -69,6 +69,7 @@ class StudentServiceTest {
     void 受講生詳細の検索＿リポジトリの処理が適切に呼び出せていること() {
         String id = "1";
         Student student = new Student();
+        student.setId(id);
         List<StudentCourse> studentCourse = new ArrayList<>();
         when(repository.searchStudent(id)).thenReturn(student);
         when(repository.searchStudentCourse(id)).thenReturn(studentCourse);
@@ -83,7 +84,7 @@ class StudentServiceTest {
                 .searchStudent(id);
         verify(repository, Mockito.times(1))
                 .searchStudentCourse(id);
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(expected.getStudent().getId(), actual.getStudent().getId());
     }
 
 

@@ -105,8 +105,9 @@ public class StudentService {
     public void updateStudent(StudentDetail studentDetail) {
         repository.updateStudent(studentDetail.getStudent());
         //コース情報登録
-        studentDetail.getStudentCourseList()
-                .forEach(studentCourse -> repository.updateStudentCourse(studentCourse));
+        for (StudentCourse studentCourse : studentDetail.getStudentCourseList()) {
+            repository.updateStudentCourse(studentCourse);
+        }
     }
 
     //削除処理

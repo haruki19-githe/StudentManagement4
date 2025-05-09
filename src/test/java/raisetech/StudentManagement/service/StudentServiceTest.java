@@ -15,6 +15,7 @@ import raisetech.StudentManagement.data.StudentCourse;
 import raisetech.StudentManagement.domain.StudentDetail;
 import raisetech.StudentManagement.repository.StudentRepository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,7 +76,7 @@ class StudentServiceTest {
         when(repository.searchStudentCourse(id)).thenReturn(studentCourse);
 
         //実行
-        StudentDetail expected = new StudentDetail(student,studentCourse);
+        StudentDetail expected = new StudentDetail(student, studentCourse);
         StudentDetail actual = sut.searchStudent(id);
 
 
@@ -87,5 +88,52 @@ class StudentServiceTest {
         Assertions.assertEquals(expected.getStudent().getId(), actual.getStudent().getId());
     }
 
+    @Test
+    void 受講生詳細の登録＿リポジトリの処理が適切に呼び出せていること() {
+        Student student = new Student();
+        student.setId("1");
+        student.setName("佐藤二郎");
+        student.setFurigana("サトウジロウ");
+        student.setNickName("ジロ");
+        student.setEmail("ziro@example.com");
+        student.setArea("東京");
+        student.setAge(44);
+        student.setGender("男性");
+        student.setRemark("白米が好き");
+
+        StudentCourse studentCourse = new StudentCourse();
+        List<StudentCourse> studentCourseList = List.of(studentCourse);
+
+        StudentDetail studentDetail = new StudentDetail(student, studentCourseList);
+
+        StudentDetail result = sut.registerStudent(studentDetail);
+
+        verify(repository, Mockito.times(1))
+                .registerStudent(student);
+        verify(repository, Mockito.times(1))
+                .registerStudentCourse(studentCourse);
+
+        Assertions.assertEquals(studentDetail, result);
+    }
+
+    @Test
+    void 受講生詳細の更新＿リポジトリの処理が適切に呼び出せていること() {
+        Student student = new Student();
+
+        StudentCourse studentCourse = new StudentCourse();
+        List<StudentCourse> studentCourseList = List.of(studentCourse);
+
+
+        StudentDetail studentDetail = new StudentDetail(student, studentCourseList);
+
+        sut.updateStudent(studentDetail);
+
+
+        verify(repository, Mockito.times(1))
+                .updateStudent(studentDetail.getStudent());
+        verify(repository, Mockito.times(1))
+                .updateStudentCourse(studentCourse);
+
+    }
 
 }

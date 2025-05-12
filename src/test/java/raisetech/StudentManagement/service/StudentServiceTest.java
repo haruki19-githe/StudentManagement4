@@ -85,7 +85,7 @@ class StudentServiceTest {
                 .searchStudent(id);
         verify(repository, Mockito.times(1))
                 .searchStudentCourse(id);
-        Assertions.assertEquals(expected.getStudent().getId(), actual.getStudent().getId());
+        Assertions.assertEquals(expected, actual);
     }
 
     @Test

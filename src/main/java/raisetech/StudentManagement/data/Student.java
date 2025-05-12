@@ -3,12 +3,14 @@ package raisetech.StudentManagement.data;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Pattern;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 @Schema(description = "受講生")
 @Getter
 @Setter
+@EqualsAndHashCode
 public class Student {
 
     @Schema(description = "id", type = "string", example = "1")
@@ -41,4 +43,19 @@ public class Student {
 
     @Schema(description = "削除フラグ", type = "boolean")
     private boolean isDeleted;
+
+
+    public Student(String id, String name, String furigana, String nickName, String email, String area, int age, String gender, String remark) {
+        this.id = id;
+        this.name = name;
+        this.furigana = furigana;
+        this.nickName = nickName;
+        this.email = email;
+        this.area = area;
+        this.age = age;
+        this.gender = gender;
+        this.remark = remark;
+    }
+
+
 }

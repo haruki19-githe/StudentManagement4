@@ -68,8 +68,8 @@ class StudentServiceTest {
     @Test
     void 受講生詳細の検索＿リポジトリの処理が適切に呼び出せていること() {
         String id = "1";
-        Student student = new Student("1","佐藤太朗","サトウタロウ",
-                "タロ","taro@example.com ","東京",25,"男性","白米が好き");
+        Student student = new Student("1", "佐藤太朗", "サトウタロウ",
+                "タロ", "taro@example.com ", "東京", 25, "男性", "白米が好き");
 
         List<StudentCourse> studentCourse = new ArrayList<>();
         when(repository.searchStudent(id)).thenReturn(student);
@@ -90,7 +90,7 @@ class StudentServiceTest {
 
     @Test
     void 受講生詳細の登録＿リポジトリの処理が適切に呼び出せていること() {
-        Student student = new Student("1","佐藤二郎", "サトウジロウ", "ジロ",
+        Student student = new Student("1", "佐藤二郎", "サトウジロウ", "ジロ",
                 "ziro@example.com", "東京", 44, "男性", "白米が好き");
 
 
@@ -112,8 +112,8 @@ class StudentServiceTest {
 
     @Test
     void 受講生詳細の更新＿リポジトリの処理が適切に呼び出せていること() {
-        Student student = new Student("1","佐藤太朗","サトウタロウ",
-                "タロ","taro@example.com ","東京",25,"男性","白米が好き");
+        Student student = new Student("1", "佐藤太朗", "サトウタロウ",
+                "タロ", "taro@example.com ", "東京", 25, "男性", "白米が好き");
 
         StudentCourse studentCourse = new StudentCourse();
         List<StudentCourse> studentCourseList = List.of(studentCourse);
@@ -128,9 +128,8 @@ class StudentServiceTest {
                 .updateStudent(studentDetail.getStudent());
         verify(repository, Mockito.times(1))
                 .updateStudentCourse(studentCourse);
-
+        
     }
-
 
 
 }

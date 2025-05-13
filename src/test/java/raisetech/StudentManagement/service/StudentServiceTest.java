@@ -30,9 +30,6 @@ class StudentServiceTest {
     private StudentRepository repository;
 
     @Mock
-    private StudentDetail studentDetail;
-
-    @Mock
     private StudentConverter converter;
 
     private StudentService sut;
@@ -41,6 +38,7 @@ class StudentServiceTest {
     @BeforeEach
     void before() {
         sut = new StudentService(repository, converter);
+
     }
 
     @Test
@@ -128,7 +126,7 @@ class StudentServiceTest {
                 .updateStudent(studentDetail.getStudent());
         verify(repository, Mockito.times(1))
                 .updateStudentCourse(studentCourse);
-        
+
     }
 
 

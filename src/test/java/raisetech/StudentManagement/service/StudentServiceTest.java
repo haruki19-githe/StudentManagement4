@@ -24,7 +24,7 @@ import static org.mockito.Mockito.*;
 class StudentServiceTest {
 
     @InjectMocks
-    StudentService studentService;
+    private StudentService sut;
 
     @Mock
     private StudentRepository repository;
@@ -32,14 +32,6 @@ class StudentServiceTest {
     @Mock
     private StudentConverter converter;
 
-    private StudentService sut;
-
-    //テストクラスの各テストメソッドの実行前に毎回実行される。
-    @BeforeEach
-    void before() {
-        sut = new StudentService(repository, converter);
-
-    }
 
     @Test
     void 受講生詳細の一覧検索＿リポジトリとコンバーターの処理が適切に呼び出せていること() {

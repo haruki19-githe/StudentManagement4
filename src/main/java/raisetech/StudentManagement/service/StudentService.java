@@ -73,10 +73,10 @@ public class StudentService {
 
         repository.registerStudent(student);
         //コース情報登録
-        studentDetail.getStudentCourseList().forEach(studentCourse -> {
+        for (StudentCourse studentCourse : studentDetail.getStudentCourseList()) {
             initStudentsCourse(studentCourse, student);
             repository.registerStudentCourse(studentCourse);
-        });
+        }
         return studentDetail;
     }
 
@@ -105,8 +105,9 @@ public class StudentService {
     public void updateStudent(StudentDetail studentDetail) {
         repository.updateStudent(studentDetail.getStudent());
         //コース情報登録
-        studentDetail.getStudentCourseList()
-                .forEach(studentCourse -> repository.updateStudentCourse(studentCourse));
+        for (StudentCourse studentCourse : studentDetail.getStudentCourseList()) {
+            repository.updateStudentCourse(studentCourse);
+        }
     }
 
     //削除処理

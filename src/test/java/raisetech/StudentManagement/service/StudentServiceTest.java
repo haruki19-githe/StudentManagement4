@@ -99,6 +99,8 @@ class StudentServiceTest {
 
     }
 
+    //Todo initのテストをいつかやる
+
     @Test
     void 受講生詳細の更新＿リポジトリの処理が適切に呼び出せていること() {
         Student student = new Student("1", "佐藤太朗", "サトウタロウ",

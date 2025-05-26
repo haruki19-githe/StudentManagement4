@@ -83,7 +83,7 @@ class StudentServiceTest {
                 "ziro@example.com", "東京", 44, "男性", "白米が好き");
 
 
-        StudentCourse studentCourse = new StudentCourse();
+        StudentCourse studentCourse = new StudentCourse("これはテストです。", "1", "Javaコース");
         List<StudentCourse> studentCourseList = List.of(studentCourse);
 
         StudentDetail studentDetail = new StudentDetail(student, studentCourseList);
@@ -106,7 +106,7 @@ class StudentServiceTest {
         Student student = new Student("1", "佐藤太朗", "サトウタロウ",
                 "タロ", "taro@example.com ", "東京", 25, "男性", "白米が好き");
 
-        StudentCourse studentCourse = new StudentCourse();
+        StudentCourse studentCourse = new StudentCourse("これはテストです。", "1", "Javaコース");
         List<StudentCourse> studentCourseList = List.of(studentCourse);
 
 

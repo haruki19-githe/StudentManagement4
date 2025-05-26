@@ -10,7 +10,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.thymeleaf.spring6.expression.Mvc;
 import raisetech.StudentManagement.data.Student;
 import raisetech.StudentManagement.data.StudentCourse;
 import raisetech.StudentManagement.domain.StudentDetail;
@@ -21,6 +23,7 @@ import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 
 @WebMvcTest(StudentController.class)
@@ -49,13 +52,7 @@ class StudentControllerTest {
     void 受講生詳細の受講生で適切な値を入力した時に入力チェックに異常が発生しないこと() {
         Student student = new Student("1", "佐藤二郎", "サトウジロウ", "ジロ",
                 "ziro@example.com", "東京", 44, "男性", "白米が好き");
-        student.setId("1");
-        student.setName("江南康二");
-        student.setFurigana("エナミコウジ");
-        student.setNickName("エナミ");
-        student.setEmail("test@example.com");
-        student.setArea("奈良県");
-        student.setGender("男性");
+
 
         Set<ConstraintViolation<Student>> violations = validator.validate(student);
 
@@ -67,12 +64,7 @@ class StudentControllerTest {
         Student student = new Student("1", "佐藤二郎", "サトウジロウ", "ジロ",
                 "ziro@example.com", "東京", 44, "男性", "白米が好き");
         student.setId("テストです。");
-        student.setName("江南康二");
-        student.setFurigana("エナミコウジ");
-        student.setNickName("エナミ");
-        student.setEmail("test@example.com");
-        student.setArea("奈良県");
-        student.setGender("男性");
+
 
         Set<ConstraintViolation<Student>> violations = validator.validate(student);
 
@@ -84,10 +76,7 @@ class StudentControllerTest {
 
     @Test
     void 受講生詳細の受講生コース情報で適切な値を入力した時に入力チェックに異常が発生しないこと() {
-        StudentCourse studentCourse = new StudentCourse();
-        studentCourse.setId("1");
-        studentCourse.setStudentId("1");
-        studentCourse.setCourseName("Javaコース");
+        StudentCourse studentCourse = new StudentCourse("これはテストです。", "1", "Javaコース");
 
         Set<ConstraintViolation<StudentCourse>> violations = validator.validate(studentCourse);
 
@@ -96,10 +85,7 @@ class StudentControllerTest {
 
     @Test
     void 受講生詳細の受講生コース情報でIDに数字以外を用いたときに入力チェックにかかること() {
-        StudentCourse studentCourse = new StudentCourse();
-        studentCourse.setId("これはテストです。");
-        studentCourse.setStudentId("1");
-        studentCourse.setCourseName("Javaコース");
+        StudentCourse studentCourse = new StudentCourse("これはテストです。", "1", "Javaコース");
 
         Set<ConstraintViolation<StudentCourse>> violations = validator.validate(studentCourse);
 
@@ -114,6 +100,7 @@ class StudentControllerTest {
         String id = "1";
         mockMvc.perform(MockMvcRequestBuilders.get("/student/{id}", "1"))
                 .andExpect(status().isOk());
+
 
         verify(service, times(1)).searchStudent(id);
     }

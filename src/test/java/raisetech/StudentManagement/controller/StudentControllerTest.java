@@ -94,7 +94,28 @@ class StudentControllerTest {
     @Test
     void 受講生詳細の検索が実行できること() throws Exception {
         String id = "1";
-        mockMvc.perform(MockMvcRequestBuilders.get("/student/{id}", "1"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/student/{id}", "1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                     "student": {
+                                         "name": "佐藤太朗",
+                                         "furigana" : "サトウタロウ",
+                                         "nickName":"タロ",
+                                         "email":"taro@example.com ",
+                                         "area":"東京",
+                                         "age":"25",
+                                         "gender":"男性",
+                                         "remark":"白米が好き"
+                                     },
+                                     "studentCourseList" :[
+                                 {
+                                     "courseName":"java制作コース"
+                                 }
+                                     ]
+                                
+                                 }
+                                """))
                 .andExpect(status().isOk());
 
         verify(service, times(1)).searchStudent(id);

@@ -10,9 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.thymeleaf.spring6.expression.Mvc;
 import raisetech.StudentManagement.data.Student;
 import raisetech.StudentManagement.data.StudentCourse;
 import raisetech.StudentManagement.domain.StudentDetail;
@@ -22,8 +20,7 @@ import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 @WebMvcTest(StudentController.class)
@@ -61,9 +58,8 @@ class StudentControllerTest {
 
     @Test
     void 受講生詳細の受講生でIDに数字以外を用いたときに入力チェックにかかること() {
-        Student student = new Student("1", "佐藤二郎", "サトウジロウ", "ジロ",
+        Student student = new Student("テストです。", "佐藤二郎", "サトウジロウ", "ジロ",
                 "ziro@example.com", "東京", 44, "男性", "白米が好き");
-        student.setId("テストです。");
 
 
         Set<ConstraintViolation<Student>> violations = validator.validate(student);
@@ -76,7 +72,7 @@ class StudentControllerTest {
 
     @Test
     void 受講生詳細の受講生コース情報で適切な値を入力した時に入力チェックに異常が発生しないこと() {
-        StudentCourse studentCourse = new StudentCourse("これはテストです。", "1", "Javaコース");
+        StudentCourse studentCourse = new StudentCourse("1", "1", "Javaコース");
 
         Set<ConstraintViolation<StudentCourse>> violations = validator.validate(studentCourse);
 
@@ -100,7 +96,6 @@ class StudentControllerTest {
         String id = "1";
         mockMvc.perform(MockMvcRequestBuilders.get("/student/{id}", "1"))
                 .andExpect(status().isOk());
-
 
         verify(service, times(1)).searchStudent(id);
     }

@@ -39,8 +39,34 @@ class StudentControllerTest {
 
     @Test
     void 受講生詳細の一覧検索が実行できてからのリストが返ってくること() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/studentList"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/studentList")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                     "student": {
+                                         "name": "佐藤太朗",
+                                         "furigana" : "サトウタロウ",
+                                         "nickName":"タロ",
+                                         "email":"taro@example.com ",
+                                         "area":"東京",
+                                         "age":"25",
+                                         "gender":"男性",
+                                         "remark":"白米が好き"
+                                     },
+                                     "studentCourseList" :[
+                                 {
+                                                  "id": "1",
+                                                  "studentId": "1",
+                                                  "courseName": "javaコース",
+                                                  "courseStartDate": "2024-12-01T00:00:00",
+                                                  "courseEndDate": "2024-12-31T00:00:00"
+                                              }
+                                     ]
+                                
+                                 }
+                                """))
                 .andExpect(status().isOk());
+
 
         verify(service, times(1)).searchStudentList();
     }

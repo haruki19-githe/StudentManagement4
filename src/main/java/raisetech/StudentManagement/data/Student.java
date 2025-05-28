@@ -10,9 +10,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Student {
-
     @Schema(description = "id", type = "string", example = "1")
-    @Pattern(regexp = "^\\d+$")
+    @Pattern(regexp = "^\\d+$", message = "数字のみを入力するようにしてください。")
     private String id;
 
     @Schema(description = "名前", type = "string", example = "山田")

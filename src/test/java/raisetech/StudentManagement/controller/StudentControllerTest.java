@@ -3,7 +3,9 @@ package raisetech.StudentManagement.controller;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -22,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @WebMvcTest(StudentController.class)
 class StudentControllerTest {
 
@@ -31,6 +33,7 @@ class StudentControllerTest {
 
     @MockitoBean
     private StudentService service;
+
 
     private Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 

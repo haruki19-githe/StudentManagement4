@@ -24,7 +24,7 @@ class StudentConverterTest {
 
 
     @Test
-    void コンバーターが実行できていること() {
+    void 複数のstudentCourseがあった上で対象のものだけがconverterで紐づくことを確認() {
         Student student = new Student("1", "佐藤二郎", "サトウジロウ", "ジロ",
                 "ziro@example.com", "東京", 44, "男性", "白米が好き");
         List<Student> studentList = List.of(student);

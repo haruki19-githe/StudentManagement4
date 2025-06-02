@@ -29,6 +29,7 @@ class StudentConverterTest {
                 "ziro@example.com", "東京", 44, "男性", "白米が好き");
         List<Student> studentList = List.of(student);
         StudentCourse studentCourse = new StudentCourse("1", "1", "Javaコース");
+        StudentCourse studentCourse2 = new StudentCourse("2", "2", "AWSコース");
         List<StudentCourse> studentCourseList = List.of(studentCourse);
 
         List<StudentDetail> studentDetails = new ArrayList<>();
@@ -37,6 +38,9 @@ class StudentConverterTest {
         List<StudentCourse> convertStudentCourseList = new ArrayList<>();
         if (student.getId().equals(studentCourse.getStudentId())) {
             convertStudentCourseList.add(studentCourse);
+        }
+        if (student.getId().equals(studentCourse2.getStudentId())) {
+            convertStudentCourseList.add(studentCourse2);
         }
         studentDetail.setStudentCourseList(convertStudentCourseList);
         studentDetails.add(studentDetail);

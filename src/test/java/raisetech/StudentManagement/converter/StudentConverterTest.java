@@ -35,7 +35,9 @@ class StudentConverterTest {
         StudentDetail studentDetail = new StudentDetail();
         studentDetail.setStudent(student);
         List<StudentCourse> convertStudentCourseList = new ArrayList<>();
-        convertStudentCourseList.add(studentCourse);
+        if (student.getId().equals(studentCourse.getStudentId())) {
+            convertStudentCourseList.add(studentCourse);
+        }
         studentDetail.setStudentCourseList(convertStudentCourseList);
         studentDetails.add(studentDetail);
 

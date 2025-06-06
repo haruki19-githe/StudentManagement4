@@ -41,17 +41,5 @@ public class Student {
     @Schema(description = "削除フラグ", type = "boolean")
     private boolean isDeleted;
 
-    public Student(String id, String name, String furigana, String nickName, String email, String area, int age, String gender, String remark) {
-        this.id = id;
-        this.name = name;
-        this.furigana = furigana;
-        this.nickName = nickName;
-        this.email = email;
-        this.area = area;
-        this.age = age;
-        this.gender = gender;
-        this.remark = remark;
-    }
-
 
 }

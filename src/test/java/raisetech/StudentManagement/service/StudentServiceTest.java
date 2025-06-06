@@ -57,8 +57,8 @@ class StudentServiceTest {
     @Test
     void 受講生詳細の検索＿リポジトリの処理が適切に呼び出せていること() {
         String id = "1";
-        Student student = new Student("1", "佐藤太朗", "サトウタロウ",
-                "タロ", "taro@example.com ", "東京", 25, "男性", "白米が好き");
+        Student student = createStudent();
+
 
         List<StudentCourse> studentCourse = new ArrayList<>();
         when(repository.searchStudent(id)).thenReturn(student);
@@ -79,9 +79,7 @@ class StudentServiceTest {
 
     @Test
     void 受講生詳細の登録＿リポジトリの処理が適切に呼び出せていること() {
-        Student student = new Student("1", "佐藤二郎", "サトウジロウ", "ジロ",
-                "ziro@example.com", "東京", 44, "男性", "白米が好き");
-
+        Student student = createStudent();
 
         StudentCourse studentCourse = new StudentCourse("1", "1", "Javaコース");
         List<StudentCourse> studentCourseList = List.of(studentCourse);
@@ -103,8 +101,7 @@ class StudentServiceTest {
 
     @Test
     void 受講生詳細の更新＿リポジトリの処理が適切に呼び出せていること() {
-        Student student = new Student("1", "佐藤太朗", "サトウタロウ",
-                "タロ", "taro@example.com ", "東京", 25, "男性", "白米が好き");
+        Student student = createStudent();
 
         StudentCourse studentCourse = new StudentCourse("1", "1", "Javaコース");
         List<StudentCourse> studentCourseList = List.of(studentCourse);
@@ -122,5 +119,17 @@ class StudentServiceTest {
 
     }
 
-
+    private static Student createStudent() {
+        Student student = new Student();
+        student.setId("1");
+        student.setName("佐藤二郎");
+        student.setFurigana("サトウジロウ");
+        student.setNickName("ジロ");
+        student.setEmail("ziro@example.com");
+        student.setArea("東京");
+        student.setAge(44);
+        student.setGender("男性");
+        student.setRemark("白米が好き");
+        return student;
+    }
 }

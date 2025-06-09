@@ -30,10 +30,5 @@ public class StudentCourse {
     @Schema(description = "コース終了日", type = "LocalDateTime", example = "2025-12-31T00:00:00")
     private LocalDateTime courseEndDate;
 
-    public StudentCourse(String id, String studentId, String courseName) {
-        this.id = id;
-        this.studentId = studentId;
-        this.courseName = courseName;
-    }
 
 }

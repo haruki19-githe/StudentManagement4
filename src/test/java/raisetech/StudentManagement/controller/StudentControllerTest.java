@@ -84,23 +84,11 @@ class StudentControllerTest {
         assertThat(violations.size()).isEqualTo(0);
     }
 
-    private static Student createStudent() {
-        Student student = new Student();
-        student.setId("1");
-        student.setName("佐藤二郎");
-        student.setFurigana("サトウジロウ");
-        student.setNickName("ジロ");
-        student.setEmail("ziro@example.com");
-        student.setArea("東京");
-        student.setAge(44);
-        student.setGender("男性");
-        student.setRemark("白米が好き");
-        return student;
-    }
 
     @Test
     void 受講生詳細の受講生でIDに数字以外を用いたときに入力チェックにかかること() {
         Student student = createStudent();
+        student.setId("これはテストです。");
 
 
         Set<ConstraintViolation<Student>> violations = validator.validate(student);
@@ -113,7 +101,7 @@ class StudentControllerTest {
 
     @Test
     void 受講生詳細の受講生コース情報で適切な値を入力した時に入力チェックに異常が発生しないこと() {
-        StudentCourse studentCourse = new StudentCourse("1", "1", "Javaコース");
+        StudentCourse studentCourse = createStudentCourse();
 
         Set<ConstraintViolation<StudentCourse>> violations = validator.validate(studentCourse);
 
@@ -122,7 +110,8 @@ class StudentControllerTest {
 
     @Test
     void 受講生詳細の受講生コース情報でIDに数字以外を用いたときに入力チェックにかかること() {
-        StudentCourse studentCourse = new StudentCourse("これはテストです。", "1", "Javaコース");
+        StudentCourse studentCourse = createStudentCourse();
+        studentCourse.setId("これはテストです。");
 
         Set<ConstraintViolation<StudentCourse>> violations = validator.validate(studentCourse);
 
@@ -224,5 +213,26 @@ class StudentControllerTest {
         verify(service, times(1)).updateStudent(captor.capture());
     }
 
+    private static Student createStudent() {
+        Student student = new Student();
+        student.setId("1");
+        student.setName("佐藤二郎");
+        student.setFurigana("サトウジロウ");
+        student.setNickName("ジロ");
+        student.setEmail("ziro@example.com");
+        student.setArea("東京");
+        student.setAge(44);
+        student.setGender("男性");
+        student.setRemark("白米が好き");
+        return student;
+    }
+
+    private static StudentCourse createStudentCourse() {
+        StudentCourse studentCourse = new StudentCourse();
+        studentCourse.setId("1");
+        studentCourse.setStudentId("1");
+        studentCourse.setCourseName("javaコース");
+        return studentCourse;
+    }
 
 }

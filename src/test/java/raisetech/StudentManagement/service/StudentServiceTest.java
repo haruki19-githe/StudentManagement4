@@ -81,7 +81,7 @@ class StudentServiceTest {
     void 受講生詳細の登録＿リポジトリの処理が適切に呼び出せていること() {
         Student student = createStudent();
 
-        StudentCourse studentCourse = new StudentCourse("1", "1", "Javaコース");
+        StudentCourse studentCourse = createStudentCourse();
         List<StudentCourse> studentCourseList = List.of(studentCourse);
 
         StudentDetail studentDetail = new StudentDetail(student, studentCourseList);
@@ -97,13 +97,14 @@ class StudentServiceTest {
 
     }
 
+
     //Todo initのテストをいつかやる
 
     @Test
     void 受講生詳細の更新＿リポジトリの処理が適切に呼び出せていること() {
         Student student = createStudent();
 
-        StudentCourse studentCourse = new StudentCourse("1", "1", "Javaコース");
+        StudentCourse studentCourse = createStudentCourse();
         List<StudentCourse> studentCourseList = List.of(studentCourse);
 
 
@@ -131,5 +132,13 @@ class StudentServiceTest {
         student.setGender("男性");
         student.setRemark("白米が好き");
         return student;
+    }
+
+    private static StudentCourse createStudentCourse() {
+        StudentCourse studentCourse = new StudentCourse();
+        studentCourse.setId("1");
+        studentCourse.setStudentId("1");
+        studentCourse.setCourseName("javaコース");
+        return studentCourse;
     }
 }

@@ -29,8 +29,11 @@ class StudentConverterTest {
 
 
         List<Student> studentList = List.of(student);
-        StudentCourse studentCourse = new StudentCourse("1", "1", "Javaコース");
-        StudentCourse studentCourse2 = new StudentCourse("2", "2", "AWSコース");
+        StudentCourse studentCourse = createStudentCourse();
+        StudentCourse studentCourse2 = createStudentCourse();
+        studentCourse2.setId("1");
+        studentCourse2.setStudentId("2");
+        studentCourse2.setCourseName("AWSコース");
         List<StudentCourse> studentCourseList = List.of(studentCourse);
 
         List<StudentDetail> studentDetails = new ArrayList<>();
@@ -65,6 +68,14 @@ class StudentConverterTest {
         student.setGender("男性");
         student.setRemark("白米が好き");
         return student;
+    }
+
+    private static StudentCourse createStudentCourse() {
+        StudentCourse studentCourse = new StudentCourse();
+        studentCourse.setId("1");
+        studentCourse.setStudentId("1");
+        studentCourse.setCourseName("javaコース");
+        return studentCourse;
     }
 }
 

@@ -1,6 +1,5 @@
 package raisetech.StudentManagement.repository;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import raisetech.StudentManagement.data.StudentCourse;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 
 @MybatisTest
@@ -18,8 +16,6 @@ class StudentRepositoryTest {
     @Autowired
     private StudentRepository sut;
 
-    @Autowired
-    private StudentRepository repository;
 
     @Test
     void 受講生の全件検索が行えること() {

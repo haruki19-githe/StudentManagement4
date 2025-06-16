@@ -33,7 +33,7 @@ public interface StudentRepository {
 
     Student searchStudentArea(String area);
 
-    Student searchStudentGender(String gender);
+    List<Student> searchStudentGender(String gender);
 
 
     /**

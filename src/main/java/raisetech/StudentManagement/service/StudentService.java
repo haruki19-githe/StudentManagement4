@@ -15,6 +15,7 @@ import raisetech.StudentManagement.data.StudentCourse;
 import raisetech.StudentManagement.domain.StudentDetail;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -69,13 +70,21 @@ public class StudentService {
         return new StudentDetail(student, studentCourse);
     }
 
-    public StudentDetail searchStudentGender(String gender) {
-        Student student = repository.searchStudentGender(gender);
-        if (student == null) {
+    public List<StudentDetail> searchStudentGender(String gender) {
+        List<Student> students = repository.searchStudentGender(gender);
+        if (students == null) {
             throw new ResourceNotFoundException("指定されたIDの受講生は存在しません。");
         }
-        List<StudentCourse> studentCourse = repository.searchStudentCourse(student.getId());
-        return new StudentDetail(student, studentCourse);
+        List<StudentDetail> result = new ArrayList<>();
+        for (Student student : students) {
+            List<StudentCourse> studentCourse = repository.searchStudentCourse(student.getId());
+            result.add(new StudentDetail(student, studentCourse));
+        }
+
+        return result;
+
+        //List<StudentCourse> studentCourse = repository.searchStudentCourse(student.get(0).getId());
+        //return new StudentDetail(student, studentCourse);
     }
 
     /**

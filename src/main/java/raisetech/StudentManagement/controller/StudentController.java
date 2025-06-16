@@ -131,7 +131,7 @@ public class StudentController {
     }
 
     @GetMapping("/student/gender/{gender}")
-    public StudentDetail getStudentGender
+    public List<StudentDetail> getStudentGender
             (@PathVariable @NotBlank String gender) {
         return service.searchStudentGender(gender);
     }

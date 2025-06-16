@@ -2,14 +2,11 @@ package raisetech.StudentManagement.converter;
 
 import org.springframework.stereotype.Component;
 import raisetech.StudentManagement.data.RegistrationStatus;
-import raisetech.StudentManagement.data.Student;
 import raisetech.StudentManagement.data.StudentCourse;
 import raisetech.StudentManagement.domain.StudentCourseDetail;
-import raisetech.StudentManagement.domain.StudentDetail;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class StudentCourseConverter {

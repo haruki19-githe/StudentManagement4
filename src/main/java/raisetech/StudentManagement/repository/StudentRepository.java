@@ -2,6 +2,7 @@ package raisetech.StudentManagement.repository;
 //Model
 
 import org.apache.ibatis.annotations.*;
+import raisetech.StudentManagement.data.RegistrationStatus;
 import raisetech.StudentManagement.data.Student;
 import raisetech.StudentManagement.data.StudentCourse;
 
@@ -28,6 +29,13 @@ public interface StudentRepository {
      */
     Student searchStudent(String id);
 
+    Student searchStudentName(String name);
+
+    Student searchStudentArea(String area);
+
+    Student searchStudentGender(String gender);
+
+
     /**
      * 受講生のコース情報の全件検索を行います。
      *
@@ -42,6 +50,8 @@ public interface StudentRepository {
      * @return　受講生IDに紐づく受講生コース情報
      */
     List<StudentCourse> searchStudentCourse(String studentId);
+
+    List<RegistrationStatus> searchRegistrationStatusList();
 
     /**
      * 受講生を新規登録します。IDに関しては自動採番を行う。

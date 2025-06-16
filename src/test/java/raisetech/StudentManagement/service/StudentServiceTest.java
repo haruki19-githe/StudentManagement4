@@ -61,7 +61,7 @@ class StudentServiceTest {
 
 
         List<StudentCourse> studentCourse = new ArrayList<>();
-        when(repository.searchStudent(id)).thenReturn(student);
+        when(repository.searchStudentById(id)).thenReturn(student);
         when(repository.searchStudentCourse(id)).thenReturn(studentCourse);
 
         //実行
@@ -71,7 +71,7 @@ class StudentServiceTest {
 
         //検証
         verify(repository, Mockito.times(1))
-                .searchStudent(id);
+                .searchStudentById(id);
         verify(repository, Mockito.times(1))
                 .searchStudentCourse(id);
         Assertions.assertEquals(expected, actual);

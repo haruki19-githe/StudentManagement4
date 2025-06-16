@@ -10,11 +10,32 @@
         WHERE is_deleted = false
     </select>
 
-    <!--　受講生の検索 -->
+    <!--　受講生の検索(id) -->
     <select id="searchStudent" resultType="raisetech.StudentManagement.data.Student">
         SELECT *
         FROM students
         WHERE id = #{id}
+    </select>
+
+    <!--　受講生の検索(name) -->
+    <select id="searchStudentName" resultType="raisetech.StudentManagement.data.Student">
+        SELECT *
+        FROM students
+        WHERE name = #{name}
+    </select>
+
+    <!--　受講生の検索(area) -->
+    <select id="searchStudentArea" resultType="raisetech.StudentManagement.data.Student">
+        SELECT *
+        FROM students
+        WHERE area = #{area}
+    </select>
+
+    <!--　受講生の検索(gender) -->
+    <select id="searchStudentGender" resultType="raisetech.StudentManagement.data.Student">
+        SELECT *
+        FROM students
+        WHERE gender = #{gender}
     </select>
 
     <!--　受講生のコース情報の全件検索 -->
@@ -28,6 +49,12 @@
         SELECT *
         FROM students_courses
         WHERE student_id = #{student_id}
+    </select>
+
+    <!--　受講生の申込状況の全件検索 -->
+    <select id="searchRegistrationStatusList" resultType="raisetech.StudentManagement.data.RegistrationStatus">
+        SELECT *
+        FROM registration_status
     </select>
 
     <!--　受講生を新規登録 -->

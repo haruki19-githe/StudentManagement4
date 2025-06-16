@@ -52,22 +52,32 @@ public class StudentService {
         return new StudentDetail(student, studentCourse);
     }
 
-    public StudentDetail searchStudentName(String name) {
-        Student student = repository.searchStudentName(name);
-        if (student == null) {
+    public List<StudentDetail> searchStudentName(String name) {
+        List<Student> students = repository.searchStudentName(name);
+        if (students == null) {
             throw new ResourceNotFoundException("指定されたIDの受講生は存在しません。");
         }
-        List<StudentCourse> studentCourse = repository.searchStudentCourse(student.getId());
-        return new StudentDetail(student, studentCourse);
+        List<StudentDetail> result = new ArrayList<>();
+        for (Student student : students) {
+            List<StudentCourse> studentCourse = repository.searchStudentCourse(student.getId());
+            result.add(new StudentDetail(student, studentCourse));
+        }
+
+        return result;
     }
 
-    public StudentDetail searchStudentArea(String area) {
-        Student student = repository.searchStudentArea(area);
-        if (student == null) {
+    public List<StudentDetail> searchStudentArea(String area) {
+        List<Student> students = repository.searchStudentArea(area);
+        if (students == null) {
             throw new ResourceNotFoundException("指定されたIDの受講生は存在しません。");
         }
-        List<StudentCourse> studentCourse = repository.searchStudentCourse(student.getId());
-        return new StudentDetail(student, studentCourse);
+        List<StudentDetail> result = new ArrayList<>();
+        for (Student student : students) {
+            List<StudentCourse> studentCourse = repository.searchStudentCourse(student.getId());
+            result.add(new StudentDetail(student, studentCourse));
+        }
+
+        return result;
     }
 
     public List<StudentDetail> searchStudentGender(String gender) {
@@ -82,9 +92,6 @@ public class StudentService {
         }
 
         return result;
-
-        //List<StudentCourse> studentCourse = repository.searchStudentCourse(student.get(0).getId());
-        //return new StudentDetail(student, studentCourse);
     }
 
     /**

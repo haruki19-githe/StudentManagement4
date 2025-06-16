@@ -29,9 +29,9 @@ public interface StudentRepository {
      */
     Student searchStudent(String id);
 
-    Student searchStudentName(String name);
+    List<Student> searchStudentName(String name);
 
-    Student searchStudentArea(String area);
+    List<Student> searchStudentArea(String area);
 
     List<Student> searchStudentGender(String gender);
 

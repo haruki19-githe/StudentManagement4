@@ -119,13 +119,13 @@ public class StudentController {
     }
 
     @GetMapping("/student/name/{name}")
-    public StudentDetail getStudentName
+    public List<StudentDetail> getStudentName
             (@PathVariable @NotBlank String name) {
         return service.searchStudentName(name);
     }
 
     @GetMapping("/student/area/{area}")
-    public StudentDetail getStudentArea
+    public List<StudentDetail> getStudentArea
             (@PathVariable @NotBlank String area) {
         return service.searchStudentArea(area);
     }

@@ -25,14 +25,18 @@ public class StudentConverter {
      */
     public List<StudentDetail> convertStudentDetails(List<Student> studentList, List<StudentCourse> studentCourseList) {
         List<StudentDetail> studentDetails = new ArrayList<>();
-        studentList.forEach(student -> {
+        for (Student student : studentList) {
             StudentDetail studentDetail = new StudentDetail();
             studentDetail.setStudent(student);
-            List<StudentCourse> convertStudentCourseList = studentCourseList.stream()
-                    .filter(studentCourse -> student.getId().equals(studentCourse.getStudentId())).collect(Collectors.toList());
+            List<StudentCourse> convertStudentCourseList = new ArrayList<>();
+            for (StudentCourse studentCourse : studentCourseList) {
+                if (student.getId().equals(studentCourse.getStudentId())) {
+                    convertStudentCourseList.add(studentCourse);
+                }
+            }
             studentDetail.setStudentCourseList(convertStudentCourseList);
             studentDetails.add(studentDetail);
-        });
+        }
         return studentDetails;
     }
 }

@@ -16,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
+import raisetech.StudentManagement.domain.StudentCourseDetail;
 import raisetech.StudentManagement.domain.StudentDetail;
 import raisetech.StudentManagement.exception.ResourceNotFoundException;
 import raisetech.StudentManagement.service.StudentService;
@@ -59,6 +60,11 @@ public class StudentController {
         return service.searchStudentList();
     }
 
+    @GetMapping("/studentCourseList")
+    public List<StudentCourseDetail> getStudentCourseList() {
+        return service.searchStudentCourseList();
+    }
+
     @Operation(summary = "例外処理のテスト用です")
     @GetMapping("studentListNotUseUrl")
     public List<StudentDetail> getStudentList2() throws Exception {
@@ -97,8 +103,8 @@ public class StudentController {
                             responseCode = "200",
                             description = "成功例",
                             content = @Content(
-                            mediaType = "application/json",
-                            schema = @Schema(implementation = StudentDetail.class))
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = StudentDetail.class))
                     ),
 
                     @ApiResponse(
@@ -106,10 +112,28 @@ public class StudentController {
                             description = "Internal server error",
                             content = @Content(schema = @Schema(implementation = ErrorResponse.class)))}
     )
-    @GetMapping("/student/{id}")
+    @GetMapping("/student/id/{id}")
     public StudentDetail getStudent
     (@PathVariable @NotBlank @Pattern(regexp = "^\\d+$") String id) {
         return service.searchStudent(id);
+    }
+
+    @GetMapping("/student/name/{name}")
+    public List<StudentDetail> getStudentName
+            (@PathVariable @NotBlank String name) {
+        return service.searchStudentName(name);
+    }
+
+    @GetMapping("/student/area/{area}")
+    public List<StudentDetail> getStudentArea
+            (@PathVariable @NotBlank String area) {
+        return service.searchStudentArea(area);
+    }
+
+    @GetMapping("/student/gender/{gender}")
+    public List<StudentDetail> getStudentGender
+            (@PathVariable @NotBlank String gender) {
+        return service.searchStudentGender(gender);
     }
 
     /**
@@ -124,6 +148,8 @@ public class StudentController {
         service.updateStudent(studentDetail);
         return ResponseEntity.ok("更新処理が成功しました。");
     }
+
+    //申し込み状況
 
 
     //削除処理

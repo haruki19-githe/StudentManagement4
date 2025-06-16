@@ -5,6 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import raisetech.StudentManagement.converter.StudentConverter;
+import raisetech.StudentManagement.converter.StudentCourseConverter;
+import raisetech.StudentManagement.data.RegistrationStatus;
+import raisetech.StudentManagement.domain.StudentCourseDetail;
 import raisetech.StudentManagement.exception.ResourceNotFoundException;
 import raisetech.StudentManagement.repository.StudentRepository;
 import raisetech.StudentManagement.data.Student;
@@ -12,6 +15,7 @@ import raisetech.StudentManagement.data.StudentCourse;
 import raisetech.StudentManagement.domain.StudentDetail;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,11 +26,13 @@ import java.util.List;
 public class StudentService {
     private StudentRepository repository;
     private StudentConverter converter;
+    private StudentCourseConverter courseConverter;
 
     @Autowired
-    public StudentService(StudentRepository repository, StudentConverter converter) {
+    public StudentService(StudentRepository repository, StudentConverter converter, StudentCourseConverter courseConverter) {
         this.repository = repository;
         this.converter = converter;
+        this.courseConverter = courseConverter;
     }
 
     /**
@@ -46,6 +52,48 @@ public class StudentService {
         return new StudentDetail(student, studentCourse);
     }
 
+    public List<StudentDetail> searchStudentName(String name) {
+        List<Student> students = repository.searchStudentName(name);
+        if (students == null) {
+            throw new ResourceNotFoundException("指定されたIDの受講生は存在しません。");
+        }
+        List<StudentDetail> result = new ArrayList<>();
+        for (Student student : students) {
+            List<StudentCourse> studentCourse = repository.searchStudentCourse(student.getId());
+            result.add(new StudentDetail(student, studentCourse));
+        }
+
+        return result;
+    }
+
+    public List<StudentDetail> searchStudentArea(String area) {
+        List<Student> students = repository.searchStudentArea(area);
+        if (students == null) {
+            throw new ResourceNotFoundException("指定されたIDの受講生は存在しません。");
+        }
+        List<StudentDetail> result = new ArrayList<>();
+        for (Student student : students) {
+            List<StudentCourse> studentCourse = repository.searchStudentCourse(student.getId());
+            result.add(new StudentDetail(student, studentCourse));
+        }
+
+        return result;
+    }
+
+    public List<StudentDetail> searchStudentGender(String gender) {
+        List<Student> students = repository.searchStudentGender(gender);
+        if (students == null) {
+            throw new ResourceNotFoundException("指定されたIDの受講生は存在しません。");
+        }
+        List<StudentDetail> result = new ArrayList<>();
+        for (Student student : students) {
+            List<StudentCourse> studentCourse = repository.searchStudentCourse(student.getId());
+            result.add(new StudentDetail(student, studentCourse));
+        }
+
+        return result;
+    }
+
     /**
      * 受講生詳細の一覧検索機能です。全件検索を行うので、条件指定は行わないものになります
      *
@@ -57,6 +105,12 @@ public class StudentService {
         return converter.convertStudentDetails(studentList, studentCourseList);
     }
 
+    public List<StudentCourseDetail> searchStudentCourseList() {
+        List<StudentCourse> studentCourseList = repository.searchStudentCourseList();
+        List<RegistrationStatus> registrationStatus = repository.searchRegistrationStatusList();
+        return courseConverter.convertStudentCourseDetails(studentCourseList, registrationStatus);
+
+    }
 
     //StudentServiceで登録処理
 

@@ -9,6 +9,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import raisetech.StudentManagement.converter.StudentConverter;
+import raisetech.StudentManagement.converter.StudentCourseConverter;
+import raisetech.StudentManagement.data.RegistrationStatus;
 import raisetech.StudentManagement.data.Student;
 import raisetech.StudentManagement.data.StudentCourse;
 import raisetech.StudentManagement.domain.StudentDetail;
@@ -30,6 +32,9 @@ class StudentServiceTest {
 
     @Mock
     private StudentConverter converter;
+
+    @Mock
+    private StudentCourseConverter courseConverter;
 
 
     @Test
@@ -55,13 +60,35 @@ class StudentServiceTest {
     }
 
     @Test
+    void 受講生コース詳細の一覧検索＿リポジトリとコンバーターの処理が適切に呼び出せていること() {
+        //事前準備
+        List<StudentCourse> studentCourseList = new ArrayList<>();
+        List<RegistrationStatus> registrationStatus = new ArrayList<>();
+        when(repository.searchStudentCourseList()).thenReturn(studentCourseList);
+        when(repository.searchRegistrationStatusList()).thenReturn(registrationStatus);
+
+        //実行
+        sut.searchStudentCourseList();
+
+        //検証
+        verify(repository, Mockito.times(1))
+                .searchStudentCourseList();
+        verify(repository, Mockito.times(1))
+                .searchRegistrationStatusList();
+        verify(courseConverter, Mockito.times(1))
+                .convertStudentCourseDetails(studentCourseList, registrationStatus);
+
+
+    }
+
+    @Test
     void 受講生詳細の検索＿リポジトリの処理が適切に呼び出せていること() {
         String id = "1";
         Student student = createStudent();
 
 
         List<StudentCourse> studentCourse = new ArrayList<>();
-        when(repository.searchStudentById(id)).thenReturn(student);
+        when(repository.searchStudent(id)).thenReturn(student);
         when(repository.searchStudentCourse(id)).thenReturn(studentCourse);
 
         //実行
@@ -71,11 +98,81 @@ class StudentServiceTest {
 
         //検証
         verify(repository, Mockito.times(1))
-                .searchStudentById(id);
+                .searchStudent(id);
         verify(repository, Mockito.times(1))
                 .searchStudentCourse(id);
         Assertions.assertEquals(expected, actual);
     }
+
+    @Test
+    void 受講生詳細の名前検索＿リポジトリの処理が適切に呼び出せていること() {
+        String name = "田中花子";
+        String id = "1";
+        Student student = createStudent();
+        StudentCourse studentCourse = createStudentCourse();
+
+        when(repository.searchStudentName(name)).thenReturn(List.of(student));
+        when(repository.searchStudentCourse(id)).thenReturn(List.of(studentCourse));
+
+        //実行
+        List<StudentDetail> expected = List.of(new StudentDetail(student, List.of(studentCourse)));
+        List<StudentDetail> actual = sut.searchStudentName(name);
+
+
+        //検証
+        verify(repository, Mockito.times(1))
+                .searchStudentName(name);
+        verify(repository, Mockito.times(1))
+                .searchStudentCourse(id);
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    void 受講生詳細の住まい検索＿リポジトリの処理が適切に呼び出せていること() {
+        String area = "愛知";
+        String id = "1";
+        Student student = createStudent();
+        StudentCourse studentCourse = createStudentCourse();
+
+        when(repository.searchStudentName(area)).thenReturn(List.of(student));
+        when(repository.searchStudentCourse(id)).thenReturn(List.of(studentCourse));
+
+        //実行
+        List<StudentDetail> expected = List.of(new StudentDetail(student, List.of(studentCourse)));
+        List<StudentDetail> actual = sut.searchStudentName(area);
+
+
+        //検証
+        verify(repository, Mockito.times(1))
+                .searchStudentName(area);
+        verify(repository, Mockito.times(1))
+                .searchStudentCourse(id);
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    void 受講生詳細の性別検索＿リポジトリの処理が適切に呼び出せていること() {
+        String gender = "男性";
+        String id = "1";
+        Student student = createStudent();
+        StudentCourse studentCourse = createStudentCourse();
+
+        when(repository.searchStudentName(gender)).thenReturn(List.of(student));
+        when(repository.searchStudentCourse(id)).thenReturn(List.of(studentCourse));
+
+        //実行
+        List<StudentDetail> expected = List.of(new StudentDetail(student, List.of(studentCourse)));
+        List<StudentDetail> actual = sut.searchStudentName(gender);
+
+
+        //検証
+        verify(repository, Mockito.times(1))
+                .searchStudentName(gender);
+        verify(repository, Mockito.times(1))
+                .searchStudentCourse(id);
+        Assertions.assertEquals(expected, actual);
+    }
+
 
     @Test
     void 受講生詳細の登録＿リポジトリの処理が適切に呼び出せていること() {

@@ -45,7 +45,7 @@ class StudentRepositoryTest {
         Student student2 = createStudent();
         student2.setId(id);
 
-        Student actual = sut.searchStudentById(id);
+        Student actual = sut.searchStudent(id);
         assertThat(actual.getId()).isEqualTo(student2.getId());
 
     }
@@ -80,7 +80,7 @@ class StudentRepositoryTest {
         student.setArea("仙台");
 
         sut.updateStudent(student);
-        Student actual = sut.searchStudentById("2");
+        Student actual = sut.searchStudent("2");
 
         assertThat(actual.getArea()).isEqualTo(student.getArea());
     }

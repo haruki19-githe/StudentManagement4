@@ -29,10 +29,22 @@ public interface StudentRepository {
      */
     Student searchStudent(String id);
 
+    /**
+     * @param name 受講生の名前
+     * @return　受講生
+     */
     List<Student> searchStudentName(String name);
 
+    /**
+     * @param area 受講生の住まい
+     * @return　受講生
+     */
     List<Student> searchStudentArea(String area);
 
+    /**
+     * @param gender 受講生の性別
+     * @return　受講生
+     */
     List<Student> searchStudentGender(String gender);
 
 
@@ -51,6 +63,9 @@ public interface StudentRepository {
      */
     List<StudentCourse> searchStudentCourse(String studentId);
 
+    /**
+     * @return 受講生の申込状況（全件）
+     */
     List<RegistrationStatus> searchRegistrationStatusList();
 
     /**
@@ -83,6 +98,7 @@ public interface StudentRepository {
      * @param studentCourse 　受講生コース情報
      */
     void updateStudentCourse(StudentCourse studentCourse);
+
 
     //受講生情報削除処理
     @Delete("DELETE FROM students WHERE id = #{id}")

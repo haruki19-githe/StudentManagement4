@@ -60,10 +60,14 @@ public class StudentController {
         return service.searchStudentList();
     }
 
+    /**
+     * @return 受講生コースの一覧（全件）
+     */
     @GetMapping("/studentCourseList")
     public List<StudentCourseDetail> getStudentCourseList() {
         return service.searchStudentCourseList();
     }
+
 
     @Operation(summary = "例外処理のテスト用です")
     @GetMapping("studentListNotUseUrl")
@@ -87,6 +91,7 @@ public class StudentController {
         StudentDetail responseStudentDetail = service.registerStudent(studentDetail);
         return ResponseEntity.ok(responseStudentDetail);
     }
+
 
     //更新処理
 
@@ -118,21 +123,33 @@ public class StudentController {
         return service.searchStudent(id);
     }
 
+    /**
+     * @param name 受講生の名前
+     * @return　受講生
+     */
     @GetMapping("/student/name/{name}")
     public List<StudentDetail> getStudentName
-            (@PathVariable @NotBlank String name) {
+    (@PathVariable @NotBlank String name) {
         return service.searchStudentName(name);
     }
 
+    /**
+     * @param area 受講生の住まい
+     * @return　受講生
+     */
     @GetMapping("/student/area/{area}")
     public List<StudentDetail> getStudentArea
-            (@PathVariable @NotBlank String area) {
+    (@PathVariable @NotBlank String area) {
         return service.searchStudentArea(area);
     }
 
+    /**
+     * @param gender 受講生の性別
+     * @return 受講生
+     */
     @GetMapping("/student/gender/{gender}")
     public List<StudentDetail> getStudentGender
-            (@PathVariable @NotBlank String gender) {
+    (@PathVariable @NotBlank String gender) {
         return service.searchStudentGender(gender);
     }
 
@@ -148,8 +165,6 @@ public class StudentController {
         service.updateStudent(studentDetail);
         return ResponseEntity.ok("更新処理が成功しました。");
     }
-
-    //申し込み状況
 
 
     //削除処理

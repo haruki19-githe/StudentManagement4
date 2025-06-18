@@ -25,9 +25,8 @@ public class StudentCourseConverter {
         studentCourseList.forEach(studentCourse -> {
             StudentCourseDetail studentCourseDetail = new StudentCourseDetail();
             studentCourseDetail.setStudentCourse(studentCourse);
-            List<RegistrationStatus> convertRegistrationStatusList = registrationStatusList.stream()
-                    .filter(registrationStatus -> studentCourse.getId()
-                            .equals(registrationStatus.getStudentCourseId())).collect(Collectors.toList());
+            List<RegistrationStatus> convertRegistrationStatusList = registrationStatusList.stream().filter(registrationStatus -> studentCourse.getId()
+                    .equals(registrationStatus.getStudentCourseId())).collect(Collectors.toList());
             studentCourseDetail.setRegistrationStatusList(convertRegistrationStatusList);
             studentCourseDetails.add(studentCourseDetail);
         });

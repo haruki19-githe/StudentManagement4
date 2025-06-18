@@ -13,5 +13,5 @@ import java.util.List;
 @AllArgsConstructor
 public class StudentCourseDetail {
     private StudentCourse studentCourse;
-    private List<RegistrationStatus> registrationStatuseList;
+    private List<RegistrationStatus> registrationStatusList;
 }

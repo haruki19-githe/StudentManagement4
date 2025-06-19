@@ -52,8 +52,8 @@ public class StudentController {
                             content = @Content(
                                     mediaType = "application/json",
                                     schema = @Schema(implementation = StudentDetail.class))
-                    )}
-
+                    )
+            }
     )
     @GetMapping("/studentList")
     public List<StudentDetail> getStudentList() {
@@ -72,7 +72,8 @@ public class StudentController {
                             content = @Content(
                                     mediaType = "application/json",
                                     schema = @Schema(implementation = StudentCourseDetail.class))
-                    )}
+                    )
+            }
 
     )
     @GetMapping("/studentCourseList")
@@ -80,10 +81,9 @@ public class StudentController {
         return service.searchStudentCourseList();
     }
 
-
     @Operation(summary = "例外処理のテスト用です")
     @GetMapping("studentListNotUseUrl")
-    public List<StudentDetail> getStudentList2() throws Exception {
+    public List<StudentDetail> getStudentListNotUseUrl() throws Exception {
         throw new ResourceNotFoundException("無効のURLです。");
     }
 
@@ -153,7 +153,9 @@ public class StudentController {
                     @ApiResponse(
                             responseCode = "500",
                             description = "Internal server error",
-                            content = @Content(schema = @Schema(implementation = ErrorResponse.class)))}
+                            content = @Content(schema = @Schema(implementation = ErrorResponse.class))
+                    )
+            }
     )
     @GetMapping("/student/name/{name}")
     public List<StudentDetail> getStudentName
@@ -205,7 +207,9 @@ public class StudentController {
                     @ApiResponse(
                             responseCode = "500",
                             description = "Internal server error",
-                            content = @Content(schema = @Schema(implementation = ErrorResponse.class)))}
+                            content = @Content(schema = @Schema(implementation = ErrorResponse.class))
+                    )
+            }
     )
     @GetMapping("/student/gender/{gender}")
     public List<StudentDetail> getStudentGender

@@ -7,7 +7,6 @@ import raisetech.StudentManagement.domain.StudentDetail;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * 受講生詳細を受講生や受講生コース情報、もしくはその逆の変換を行うコンバーターです。

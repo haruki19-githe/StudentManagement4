@@ -60,16 +60,12 @@ public class StudentController {
      * @return 受講生コースの一覧（全件）
      */
     @Operation(summary = "コース一覧検索", description = "受講生コースの一覧を検索します")
-    @ApiResponses(
-            {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "成功例",
-                            content = @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = StudentCourseDetail.class))
-                    )
-            }
+    @ApiResponses({@ApiResponse(
+            responseCode = "200",
+            description = "成功例",
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = StudentCourseDetail.class)))}
 
     )
     @GetMapping("/studentCourseList")
@@ -110,20 +106,18 @@ public class StudentController {
      * @return　受講生
      */
     @Operation(summary = "受講生詳細の検索", description = "IDに紐づく任意の受講生の情報を取得します。")
-    @ApiResponses(
-            {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "成功例",
-                            content = @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = StudentDetail.class))
-                    ),
+    @ApiResponses({@ApiResponse(
+            responseCode = "200",
+            description = "成功例",
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = StudentDetail.class))
+    ),
 
-                    @ApiResponse(
-                            responseCode = "500",
-                            description = "Internal server error",
-                            content = @Content(schema = @Schema(implementation = ErrorResponse.class)))}
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Internal server error",
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class)))}
     )
     @GetMapping("/student/id/{id}")
     public StudentDetail getStudent
@@ -136,22 +130,17 @@ public class StudentController {
      * @return　受講生
      */
     @Operation(summary = "受講生詳細の検索(名前)", description = "名前に紐づく任意の受講生の情報を取得します。")
-    @ApiResponses(
-            {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "成功例",
-                            content = @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = StudentCourseDetail.class))
-                    ),
-
-                    @ApiResponse(
-                            responseCode = "500",
-                            description = "Internal server error",
-                            content = @Content(schema = @Schema(implementation = ErrorResponse.class))
-                    )
-            }
+    @ApiResponses({@ApiResponse(
+            responseCode = "200",
+            description = "成功例",
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = StudentCourseDetail.class))
+    ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Internal server error",
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class)))}
     )
     @GetMapping("/student/name/{name}")
     public List<StudentDetail> getStudentName
@@ -164,20 +153,17 @@ public class StudentController {
      * @return　受講生
      */
     @Operation(summary = "受講生詳細の検索(住まい)", description = "住まいに紐づく任意の受講生の情報を取得します。")
-    @ApiResponses(
-            {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "成功例",
-                            content = @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = StudentCourseDetail.class))
-                    ),
-
-                    @ApiResponse(
-                            responseCode = "500",
-                            description = "Internal server error",
-                            content = @Content(schema = @Schema(implementation = ErrorResponse.class)))}
+    @ApiResponses({@ApiResponse(
+            responseCode = "200",
+            description = "成功例",
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = StudentCourseDetail.class))
+    ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Internal server error",
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class)))}
     )
     @GetMapping("/student/area/{area}")
     public List<StudentDetail> getStudentArea
@@ -190,22 +176,17 @@ public class StudentController {
      * @return 受講生
      */
     @Operation(summary = "受講生詳細の検索(性別)", description = "性別に紐づく任意の受講生の情報を取得します。")
-    @ApiResponses(
-            {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "成功例",
-                            content = @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = StudentCourseDetail.class))
-                    ),
-
-                    @ApiResponse(
-                            responseCode = "500",
-                            description = "Internal server error",
-                            content = @Content(schema = @Schema(implementation = ErrorResponse.class))
-                    )
-            }
+    @ApiResponses({@ApiResponse(
+            responseCode = "200",
+            description = "成功例",
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = StudentCourseDetail.class))
+    ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Internal server error",
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class)))}
     )
     @GetMapping("/student/gender/{gender}")
     public List<StudentDetail> getStudentGender

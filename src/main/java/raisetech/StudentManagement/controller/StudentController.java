@@ -45,14 +45,13 @@ public class StudentController {
      */
     @Operation(summary = "一覧検索", description = "受講生の一覧を検索します")
     @ApiResponses(
-            {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "成功例",
-                            content = @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = StudentDetail.class))
-                    )
+            {@ApiResponse(
+                    responseCode = "200",
+                    description = "成功例",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = StudentDetail.class))
+            )
             }
     )
     @GetMapping("/studentList")

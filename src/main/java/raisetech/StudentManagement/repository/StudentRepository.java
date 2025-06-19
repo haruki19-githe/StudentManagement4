@@ -31,19 +31,19 @@ public interface StudentRepository {
 
     /**
      * @param name 受講生の名前
-     * @return　受講生
+     * @return　受講生のリスト
      */
     List<Student> searchStudentName(String name);
 
     /**
      * @param area 受講生の住まい
-     * @return　受講生
+     * @return　受講生のリスト
      */
     List<Student> searchStudentArea(String area);
 
     /**
      * @param gender 受講生の性別
-     * @return　受講生
+     * @return　受講生のリスト
      */
     List<Student> searchStudentGender(String gender);
 

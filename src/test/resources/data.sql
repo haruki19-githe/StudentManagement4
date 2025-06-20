@@ -16,3 +16,8 @@ INSERT INTO students_courses(student_id,course_name,course_start_date,course_end
 (4,'セキュリティコース','2023-11-01','2024-02-01'),
 (4,'データ分析コース','2023-12-01','2024-03-01'),
 (5,'AI基礎コース','2024-01-01','2024-04-01');
+
+INSERT INTO registration_status(student_course_id,registration_status)VALUES
+(1,'仮申込'),
+(2,'本申込'),
+(3,'Javaコース受講中、Webコース受講終了');

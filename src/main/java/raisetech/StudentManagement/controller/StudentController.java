@@ -44,22 +44,30 @@ public class StudentController {
      * @return　受講生詳細一覧（全件）
      */
     @Operation(summary = "一覧検索", description = "受講生の一覧を検索します")
-    @ApiResponses(
-            {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "成功例",
-                            content = @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = StudentDetail.class))
-                    )}
-
+    @ApiResponses({@ApiResponse(
+            responseCode = "200",
+            description = "成功例",
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = StudentDetail.class)))}
     )
     @GetMapping("/studentList")
     public List<StudentDetail> getStudentList() {
         return service.searchStudentList();
     }
 
+    /**
+     * @return 受講生コースの一覧（全件）
+     */
+    @Operation(summary = "コース一覧検索", description = "受講生コースの一覧を検索します")
+    @ApiResponses({@ApiResponse(
+            responseCode = "200",
+            description = "成功例",
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = StudentCourseDetail.class)))}
+
+    )
     @GetMapping("/studentCourseList")
     public List<StudentCourseDetail> getStudentCourseList() {
         return service.searchStudentCourseList();
@@ -67,7 +75,7 @@ public class StudentController {
 
     @Operation(summary = "例外処理のテスト用です")
     @GetMapping("studentListNotUseUrl")
-    public List<StudentDetail> getStudentList2() throws Exception {
+    public List<StudentDetail> getStudentListNotUseUrl() throws Exception {
         throw new ResourceNotFoundException("無効のURLです。");
     }
 
@@ -88,6 +96,7 @@ public class StudentController {
         return ResponseEntity.ok(responseStudentDetail);
     }
 
+
     //更新処理
 
     /**
@@ -97,20 +106,18 @@ public class StudentController {
      * @return　受講生
      */
     @Operation(summary = "受講生詳細の検索", description = "IDに紐づく任意の受講生の情報を取得します。")
-    @ApiResponses(
-            {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "成功例",
-                            content = @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = StudentDetail.class))
-                    ),
+    @ApiResponses({@ApiResponse(
+            responseCode = "200",
+            description = "成功例",
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = StudentDetail.class))
+    ),
 
-                    @ApiResponse(
-                            responseCode = "500",
-                            description = "Internal server error",
-                            content = @Content(schema = @Schema(implementation = ErrorResponse.class)))}
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Internal server error",
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class)))}
     )
     @GetMapping("/student/id/{id}")
     public StudentDetail getStudent
@@ -118,21 +125,72 @@ public class StudentController {
         return service.searchStudent(id);
     }
 
+    /**
+     * @param name 受講生の名前
+     * @return　受講生
+     */
+    @Operation(summary = "受講生詳細の検索(名前)", description = "名前に紐づく任意の受講生の情報を取得します。")
+    @ApiResponses({@ApiResponse(
+            responseCode = "200",
+            description = "成功例",
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = StudentCourseDetail.class))
+    ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Internal server error",
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class)))}
+    )
     @GetMapping("/student/name/{name}")
     public List<StudentDetail> getStudentName
-            (@PathVariable @NotBlank String name) {
+    (@PathVariable @NotBlank String name) {
         return service.searchStudentName(name);
     }
 
+    /**
+     * @param area 受講生の住まい
+     * @return　受講生
+     */
+    @Operation(summary = "受講生詳細の検索(住まい)", description = "住まいに紐づく任意の受講生の情報を取得します。")
+    @ApiResponses({@ApiResponse(
+            responseCode = "200",
+            description = "成功例",
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = StudentCourseDetail.class))
+    ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Internal server error",
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class)))}
+    )
     @GetMapping("/student/area/{area}")
     public List<StudentDetail> getStudentArea
-            (@PathVariable @NotBlank String area) {
+    (@PathVariable @NotBlank String area) {
         return service.searchStudentArea(area);
     }
 
+    /**
+     * @param gender 受講生の性別
+     * @return 受講生
+     */
+    @Operation(summary = "受講生詳細の検索(性別)", description = "性別に紐づく任意の受講生の情報を取得します。")
+    @ApiResponses({@ApiResponse(
+            responseCode = "200",
+            description = "成功例",
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = StudentCourseDetail.class))
+    ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Internal server error",
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class)))}
+    )
     @GetMapping("/student/gender/{gender}")
     public List<StudentDetail> getStudentGender
-            (@PathVariable @NotBlank String gender) {
+    (@PathVariable @NotBlank String gender) {
         return service.searchStudentGender(gender);
     }
 
@@ -148,8 +206,6 @@ public class StudentController {
         service.updateStudent(studentDetail);
         return ResponseEntity.ok("更新処理が成功しました。");
     }
-
-    //申し込み状況
 
 
     //削除処理

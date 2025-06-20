@@ -3,6 +3,7 @@ package raisetech.StudentManagement.repository;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
+import raisetech.StudentManagement.data.RegistrationStatus;
 import raisetech.StudentManagement.data.Student;
 import raisetech.StudentManagement.data.StudentCourse;
 
@@ -45,8 +46,53 @@ class StudentRepositoryTest {
         Student student2 = createStudent();
         student2.setId(id);
 
-        Student actual = sut.searchStudentById(id);
+        Student actual = sut.searchStudent(id);
         assertThat(actual.getId()).isEqualTo(student2.getId());
+
+    }
+
+    @Test
+    void 受講生詳細の名前検索が行えること() {
+        String name = "田中花子";
+        Student student = createStudent();
+        student.setName(name);
+
+
+        Student student2 = createStudent();
+        student2.setName(name);
+
+        List<Student> actual = sut.searchStudentName(name);
+        assertThat(actual.get(0).getName()).isEqualTo(student2.getName());
+
+    }
+
+    @Test
+    void 受講生詳細の住まい検索が行えること() {
+        String area = "愛知県";
+        Student student = createStudent();
+        student.setArea(area);
+
+
+        Student student2 = createStudent();
+        student2.setArea(area);
+
+        List<Student> actual = sut.searchStudentArea(area);
+        assertThat(actual.get(0).getArea()).isEqualTo(student2.getArea());
+
+    }
+
+    @Test
+    void 受講生詳細の性別検索が行えること() {
+        String gender = "男性";
+        Student student = createStudent();
+        student.setGender(gender);
+
+
+        Student student2 = createStudent();
+        student2.setGender(gender);
+
+        List<Student> actual = sut.searchStudentName(gender);
+        assertThat(actual.get(0).getGender()).isEqualTo(student2.getGender());
 
     }
 
@@ -54,6 +100,12 @@ class StudentRepositoryTest {
     void 受講生のコース情報の全件検索が行えること() {
         List<StudentCourse> actual = sut.searchStudentCourseList();
         assertThat(actual.size()).isEqualTo(10);
+    }
+
+    @Test
+    void 受講生のコースの申込状況の全件検索が行えること() {
+        List<RegistrationStatus> actual = sut.searchRegistrationStatusList();
+        assertThat(actual.size()).isEqualTo(3);
     }
 
     @Test
@@ -80,7 +132,7 @@ class StudentRepositoryTest {
         student.setArea("仙台");
 
         sut.updateStudent(student);
-        Student actual = sut.searchStudentById("2");
+        Student actual = sut.searchStudent("2");
 
         assertThat(actual.getArea()).isEqualTo(student.getArea());
     }

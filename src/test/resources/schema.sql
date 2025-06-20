@@ -20,3 +20,10 @@ course_name VARCHAR(100) NOT NULL,
 course_start_date TIMESTAMP,
 course_end_date TIMESTAMP
 );
+
+CREATE TABLE IF NOT EXISTS registration_status
+(
+id INT AUTO_INCREMENT PRIMARY KEY,
+student_course_id VARCHAR(100) NOT NULL,
+registration_status VARCHAR(100)
+);

@@ -45,53 +45,65 @@ public class StudentService {
         //受講生情報(id一個)
         Student student = repository.searchStudent(id);
         if (student == null) {
-            throw new ResourceNotFoundException("指定されたIDの受講生は存在しません。");
+            throw new ResourceNotFoundException("指定されたIDの受講生は存在しません。:" + id);
         }
         //コース情報(受講生情報に紐づくid)
         List<StudentCourse> studentCourse = repository.searchStudentCourse(student.getId());
         return new StudentDetail(student, studentCourse);
     }
 
+    /**
+     * @param name 　受講生の名前
+     * @return　受講生詳細
+     */
     public List<StudentDetail> searchStudentName(String name) {
         List<Student> students = repository.searchStudentName(name);
-        if (students == null) {
-            throw new ResourceNotFoundException("指定されたIDの受講生は存在しません。");
+        if (students == null || students.isEmpty()) {
+            throw new ResourceNotFoundException("指定された名前の受講生は存在しません。:" + name);
         }
-        List<StudentDetail> result = new ArrayList<>();
+        List<StudentDetail> StudentDetails = new ArrayList<>();
         for (Student student : students) {
             List<StudentCourse> studentCourse = repository.searchStudentCourse(student.getId());
-            result.add(new StudentDetail(student, studentCourse));
+            StudentDetails.add(new StudentDetail(student, studentCourse));
         }
 
-        return result;
+        return StudentDetails;
     }
 
+    /**
+     * @param area 　受講生の住まい
+     * @return　受講生詳細
+     */
     public List<StudentDetail> searchStudentArea(String area) {
         List<Student> students = repository.searchStudentArea(area);
-        if (students == null) {
-            throw new ResourceNotFoundException("指定されたIDの受講生は存在しません。");
+        if (students == null || students.isEmpty()) {
+            throw new ResourceNotFoundException("指定された住まいの受講生は存在しません。:" + area);
         }
-        List<StudentDetail> result = new ArrayList<>();
+        List<StudentDetail> StudentDetails = new ArrayList<>();
         for (Student student : students) {
             List<StudentCourse> studentCourse = repository.searchStudentCourse(student.getId());
-            result.add(new StudentDetail(student, studentCourse));
+            StudentDetails.add(new StudentDetail(student, studentCourse));
         }
 
-        return result;
+        return StudentDetails;
     }
 
+    /**
+     * @param gender 　受講生の性別
+     * @return　受講生詳細
+     */
     public List<StudentDetail> searchStudentGender(String gender) {
         List<Student> students = repository.searchStudentGender(gender);
-        if (students == null) {
-            throw new ResourceNotFoundException("指定されたIDの受講生は存在しません。");
+        if (students == null || students.isEmpty()) {
+            throw new ResourceNotFoundException("指定された性別の受講生は存在しません。:" + gender);
         }
-        List<StudentDetail> result = new ArrayList<>();
+        List<StudentDetail> StudentDetails = new ArrayList<>();
         for (Student student : students) {
             List<StudentCourse> studentCourse = repository.searchStudentCourse(student.getId());
-            result.add(new StudentDetail(student, studentCourse));
+            StudentDetails.add(new StudentDetail(student, studentCourse));
         }
 
-        return result;
+        return StudentDetails;
     }
 
     /**
@@ -105,6 +117,9 @@ public class StudentService {
         return converter.convertStudentDetails(studentList, studentCourseList);
     }
 
+    /**
+     * @return 受講生コース詳細一覧（全件）
+     */
     public List<StudentCourseDetail> searchStudentCourseList() {
         List<StudentCourse> studentCourseList = repository.searchStudentCourseList();
         List<RegistrationStatus> registrationStatus = repository.searchRegistrationStatusList();

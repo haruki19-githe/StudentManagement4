@@ -75,9 +75,36 @@ class StudentControllerTest {
     }
 
     @Test
+    void 受講生コース詳細の一覧検索が実行できてからのリストが返ってくること() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/studentCourseList")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                          "studentCourse": {
+                                              "id": "1",
+                                              "studentId": "1",
+                                              "courseName": "javaコース",
+                                              "courseStartDate": "2024-12-01T00:00:00",
+                                              "courseEndDate": "2024-12-31T00:00:00"
+                                          },
+                                          "registrationStatusList": [
+                                              {
+                                                  "id": "1",
+                                                  "studentCourseId": "1",
+                                                  "registrationStatus": "仮申込"
+                                              }
+                                          ]
+                                      }
+                                """))
+                .andExpect(status().isOk());
+
+
+        verify(service, times(1)).searchStudentCourseList();
+    }
+
+    @Test
     void 受講生詳細の受講生で適切な値を入力した時に入力チェックに異常が発生しないこと() {
         Student student = createStudent();
-
 
         Set<ConstraintViolation<Student>> violations = validator.validate(student);
 
@@ -150,6 +177,112 @@ class StudentControllerTest {
 
         verify(service, times(1)).searchStudent(id);
     }
+
+    @Test
+    void 受講生詳細の名前検索が実行できること() throws Exception {
+        String name = "田中花子";
+        mockMvc.perform(MockMvcRequestBuilders.get("/student/name/{name}", "田中花子")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                         "student": {
+                                             "id": "3",
+                                             "name": "田中花子",
+                                             "furigana": "タナカハナコ",
+                                             "nickName": "ハナ",
+                                             "email": "hana@example.com",
+                                             "area": "北海道",
+                                             "age": 22,
+                                             "gender": "女性",
+                                             "remark": "パスタが好き",
+                                             "deleted": false
+                                         },
+                                         "studentCourseList": [
+                                             {
+                                                 "id": "3",
+                                                 "studentId": "3",
+                                                 "courseName": "Javaコース、Webコース",
+                                                 "courseStartDate": "2024-05-01T00:00:00",
+                                                 "courseEndDate": "2025-10-31T00:00:00"
+                                             }
+                                         ]
+                                     }
+                                """))
+                .andExpect(status().isOk());
+
+        verify(service, times(1)).searchStudentName(name);
+    }
+
+    @Test
+    void 受講生詳細の住まい検索が実行できること() throws Exception {
+        String area = "愛知県";
+        mockMvc.perform(MockMvcRequestBuilders.get("/student/area/{area}", "愛知県")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                         "student": {
+                                             "id": "3",
+                                             "name": "田中花子",
+                                             "furigana": "タナカハナコ",
+                                             "nickName": "ハナ",
+                                             "email": "hana@example.com",
+                                             "area": "北海道",
+                                             "age": 22,
+                                             "gender": "女性",
+                                             "remark": "パスタが好き",
+                                             "deleted": false
+                                         },
+                                         "studentCourseList": [
+                                             {
+                                                 "id": "3",
+                                                 "studentId": "3",
+                                                 "courseName": "Javaコース、Webコース",
+                                                 "courseStartDate": "2024-05-01T00:00:00",
+                                                 "courseEndDate": "2025-10-31T00:00:00"
+                                             }
+                                         ]
+                                     }
+                                """))
+                .andExpect(status().isOk());
+
+        verify(service, times(1)).searchStudentArea(area);
+    }
+
+    @Test
+    void 受講生詳細の性別検索が実行できること() throws Exception {
+        String gender = "男性";
+        mockMvc.perform(MockMvcRequestBuilders.get("/student/gender/{gender}", "男性")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                         "student": {
+                                             "id": "3",
+                                             "name": "田中花子",
+                                             "furigana": "タナカハナコ",
+                                             "nickName": "ハナ",
+                                             "email": "hana@example.com",
+                                             "area": "北海道",
+                                             "age": 22,
+                                             "gender": "女性",
+                                             "remark": "パスタが好き",
+                                             "deleted": false
+                                         },
+                                         "studentCourseList": [
+                                             {
+                                                 "id": "3",
+                                                 "studentId": "3",
+                                                 "courseName": "Javaコース、Webコース",
+                                                 "courseStartDate": "2024-05-01T00:00:00",
+                                                 "courseEndDate": "2025-10-31T00:00:00"
+                                             }
+                                         ]
+                                     }
+                                """))
+                .andExpect(status().isOk());
+
+        verify(service, times(1)).searchStudentGender(gender);
+    }
+
 
     @Test
     void 受講生詳細の登録が実行できること() throws Exception {

@@ -58,41 +58,32 @@ class StudentRepositoryTest {
         student.setName(name);
 
 
-        Student student2 = createStudent();
-        student2.setName(name);
-
         List<Student> actual = sut.searchStudentName(name);
-        assertThat(actual.get(0).getName()).isEqualTo(student2.getName());
+        assertThat(actual.get(0).getName()).isEqualTo(student.getName());
 
     }
 
     @Test
     void 受講生詳細の住まい検索が行えること() {
-        String area = "愛知県";
+        String area = "仙台";
         Student student = createStudent();
         student.setArea(area);
 
 
-        Student student2 = createStudent();
-        student2.setArea(area);
-
         List<Student> actual = sut.searchStudentArea(area);
-        assertThat(actual.get(0).getArea()).isEqualTo(student2.getArea());
+        assertThat(actual.get(0).getArea()).isEqualTo(student.getArea());
 
     }
 
     @Test
     void 受講生詳細の性別検索が行えること() {
-        String gender = "男性";
+        String gender = "女性";
         Student student = createStudent();
         student.setGender(gender);
 
 
-        Student student2 = createStudent();
-        student2.setGender(gender);
-
-        List<Student> actual = sut.searchStudentName(gender);
-        assertThat(actual.get(0).getGender()).isEqualTo(student2.getGender());
+        List<Student> actual = sut.searchStudentGender(gender);
+        assertThat(actual.get(0).getGender()).isEqualTo(student.getGender());
 
     }
 

@@ -151,7 +151,7 @@ class StudentControllerTest {
     @Test
     void 受講生詳細の検索が実行できること() throws Exception {
         String id = "1";
-        mockMvc.perform(MockMvcRequestBuilders.get("/student/{id}", "1")
+        mockMvc.perform(MockMvcRequestBuilders.get("/student/id/{id}", "1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
